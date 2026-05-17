@@ -10,7 +10,7 @@ const PopupParticipantList = ({ users, selectedUserId, onUserClick }) => (
   <S.LeftPanel>
     <S.ParticipantHeader>
       <S.ParticipantLabel>참여자</S.ParticipantLabel>
-      <S.CountBadge>247</S.CountBadge>
+      <S.CountBadge>{users.length}</S.CountBadge>
     </S.ParticipantHeader>
     <S.Divider />
     <S.UserList>

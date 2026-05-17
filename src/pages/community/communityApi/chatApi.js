@@ -13,3 +13,10 @@ export const getChatMessages = async (chatRoomId) => {
   const { data } = await response.json();
   return data;
 };
+
+export const getChatRoomUsers = async (chatRoomId) => {
+  const response = await fetch(`${ROOT_URL}/chat-rooms/${chatRoomId}/users`);
+  if (!response.ok) throw new Error("채팅 참여 유저를 불러오는 데 실패했습니다.");
+  const { data } = await response.json();
+  return data;
+};
