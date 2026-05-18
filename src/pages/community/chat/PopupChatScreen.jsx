@@ -8,11 +8,12 @@ import PopupRoomInfoPanel from "./popupChat/PopupRoomInfoPanel";
 import PopupUserInfoPanel from "./popupChat/PopupUserInfoPanel";
 import { useChatContext } from "../context/ChatContext";
 import useAuthStore from "../../../store/authStore";
-import { getChatMessages, getChatRoomUsers } from "../communityApi/chatApi";
+import { getChatMessages, getChatRoomUsers, getChatRoomInfo } from "../communityApi/chatApi";
 
 const WS_BASE = "ws://localhost:10000/ws/chat";
 
 const toDisplayUser = (userDTO) => ({
+  email: userDTO.userEmail,
   id: userDTO.id,
   name: userDTO.userNickname,
   role: "학습자",
@@ -74,12 +75,20 @@ const PopupChatScreen = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
+  const [chatRoomInfo, setChatRoomInfo] = useState(null);
   const { activeChatRoom } = useChatContext();
   const { user } = useAuthStore();
   const wsRef = useRef(null);
 
   const chatRoomId = activeChatRoom?.id;
   const currentUserId = user?.id;
+
+  useEffect(() => {
+    if (!chatRoomId) return;
+    getChatRoomInfo(chatRoomId)
+      .then(setChatRoomInfo)
+      .catch((err) => console.error("채팅방 정보 불러오기 실패:", err));
+  }, [chatRoomId]);
 
   useEffect(() => {
     if (!chatRoomId) return;
@@ -150,17 +159,17 @@ const PopupChatScreen = () => {
   );
 
   const handleUserClick = (user) => {
-    setSelectedUser((prev) => (prev?.id === user.id ? null : user));
+    setSelectedUser((prev) => (prev?.email === user.email ? null : user));
   };
 
   return (
     <S.PageBg>
       <S.Popup>
-        <PopupChatHeader />
+        <PopupChatHeader chatRoomInfo={chatRoomInfo} />
         <S.Body>
           <PopupParticipantList
             users={users}
-            selectedUserId={selectedUser?.id}
+            selectedUserEmail={selectedUser?.email}
             onUserClick={handleUserClick}
           />
           <PopupChatCenter
@@ -174,7 +183,7 @@ const PopupChatScreen = () => {
                 onClose={() => setSelectedUser(null)}
               />
             ) : (
-              <PopupRoomInfoPanel tags={TAGS} />
+              <PopupRoomInfoPanel chatRoomInfo={chatRoomInfo} tags={TAGS} />
             )}
           </S.RightPanel>
         </S.Body>

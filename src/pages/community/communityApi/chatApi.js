@@ -20,3 +20,10 @@ export const getChatRoomUsers = async (chatRoomId) => {
   const { data } = await response.json();
   return data;
 };
+
+export const getChatRoomInfo = async (chatRoomId) => {
+  const response = await fetch(`${ROOT_URL}/chat-rooms/${chatRoomId}`);
+  if (!response.ok) throw new Error("채팅방 정보를 불러오는 데 실패했습니다.");
+  const { data } = await response.json();
+  return data;
+};

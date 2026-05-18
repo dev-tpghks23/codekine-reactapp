@@ -6,7 +6,7 @@ import defaultProfile from "../../assets/chat/chat_default_profile.svg";
 const onlineDotUrl =
   "https://www.figma.com/api/mcp/asset/b33f6cd4-cc19-4c37-9250-813cb5dca21d";
 
-const PopupParticipantList = ({ users, selectedUserId, onUserClick }) => (
+const PopupParticipantList = ({ users, selectedUserEmail, onUserClick }) => (
   <S.LeftPanel>
     <S.ParticipantHeader>
       <S.ParticipantLabel>참여자</S.ParticipantLabel>
@@ -16,8 +16,8 @@ const PopupParticipantList = ({ users, selectedUserId, onUserClick }) => (
     <S.UserList>
       {users.map((user) => (
         <S.UserItem
-          key={user.id}
-          $selected={selectedUserId === user.id}
+          key={user.email ?? user.id}
+          $selected={selectedUserEmail === user.email}
           onClick={() => onUserClick(user)}
         >
           <S.UserProfileRow>
