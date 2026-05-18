@@ -6,9 +6,10 @@ import {
   sideComponentStyle,
   sideHeaderStyle,
 } from "../communityStyle";
-import { BORDER_STYLE, RADIUS } from "../constants";
+import { BORDER_STYLE, DEFAULT_IMAGES, RADIUS } from "../constants";
 import { useNavigate } from "react-router-dom";
 import { h10Bold } from "../../../styles/common";
+import { AuthorAvatar } from "../post/detail/postDetailStyle";
 
 const FIGMA_AVATAR =
   "https://www.figma.com/api/mcp/asset/30837f06-8619-4116-9d6a-fa29c45a9b36";
@@ -58,7 +59,16 @@ export default function SideUserProfile({ members = MOCK_MEMBERS }) {
           >
             <ProfileGroup>
               <AvatarWrapper>
-                <Avatar src={member.avatarUrl} alt={member.name} />
+                {/* <Avatar src={member.avatarUrl} alt={member.name} /> */}
+                <AuthorAvatar
+                  size="34px"
+                  border-radius="10px"
+                  src={member.avatarUrl}
+                  alt={member.name}
+                  onError={(e) => {
+                    e.currentTarget.src = DEFAULT_IMAGES.authorProfile;
+                  }}
+                />
                 <OnlineDot />
               </AvatarWrapper>
               <MemberInfo>
