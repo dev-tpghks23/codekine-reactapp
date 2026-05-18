@@ -43,10 +43,9 @@ const BotMessage = ({ text, time, children }) => (
       display: 'flex', 
       alignItems: 'center', 
       justifyContent: 'center',
-      fontSize: theme.FONT_SIZE.h9, 
-      fontLine: theme.FONT_LINE.h9,
-
-    }}>🤚</div>
+    }}>
+      <img src="/assets/image/chatbot/chatbotIcon2.svg" alt="" style={{ width: '28px', height: 'auto' }} />
+    </div>
     <div style={{ flex: 1 }}>
       <p style={{ fontSize: theme.FONT_SIZE.h11,fontWeight: theme.FONT_WEIGHT.bold, color: styles.textGray, margin: '0 0 4px' }}>이음 도우미</p>
       <div style={{
@@ -153,7 +152,7 @@ const ChatbotModal = ({ onClose }) => {
         color: theme.PALETTE.white
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '18px' }}>🤚</span>
+          <img src="/assets/image/chatbot/chatbotIcon2.svg" alt="" style={{ width: '28px', height: 'auto' }} />
           <span style={{ color: theme.PALETTE, fontWeight:theme.FONT_WEIGHT.medium, fontSize: '14px' }}>이음 도우미</span>
         </div>
         <div style={{ display: 'flex', gap: '6px' }}>
