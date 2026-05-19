@@ -78,17 +78,63 @@ const learnData = {
   ],
 };
 
-const loadLearnData = async () => {
-  // 백엔드 연결 시 이 부분 수정
-  // const response = await fetch("/api/study/learn");
-  // const data = await response.json();
-  return learnData;
+const convertEdusToLessons = (edus) => {
+  return edus.map((edu, index) => ({
+    id: edu.id,
+    status: "active",
+    icon: learnData.lessons[index]?.icon || "L",
+    title: edu.eduTitle,
+    desc: edu.eduDetail,
+    buttonText: edu.eduDia > 0 ? `${edu.eduDia} 다이아` : "시작하기",
+  }));
+};
+
+// 학습 목록
+const loadLearnPageData = async () => {
+  const response = await fetch("http://localhost:10000/api/edus");
+
+  if (!response.ok) {
+    throw new Error("학습 목록 조회 실패");
+  }
+
+  const result = await response.json();
+
+  if (!result.success) {
+    throw new Error(result.message);
+  }
+
+  return {
+    ...learnData,
+    lessons: convertEdusToLessons(result.data),
+  };
+};
+
+// 단어 목록
+const loadWordsByEduId = async (eduId) => {
+
+  const response = await fetch(`http://localhost:10000/api/words/edu/${eduId}`);
+
+  if (!response.ok) {
+    throw new Error("학습별 단어 목록 조회 실패");
+  }
+
+  const result = await response.json();
+
+  if (!result.success) {
+    throw new Error(result.message);
+  }
+
+  return result.data;
 };
 
 const LearnComponent = ({ onStartQuiz, onChangeView }) => {
+
   const [data, setData] = useState(learnData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedEduId, setSelectedEduId] = useState(null);
+  const [words, setWords] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -97,7 +143,7 @@ const LearnComponent = ({ onStartQuiz, onChangeView }) => {
         setLoading(true);
         setError(null);
 
-        const result = await loadLearnData();
+        const result = await loadLearnPageData();
         setData(result);
       } catch (error) {
         setError("학습 정보를 불러오지 못했어요.");
@@ -108,6 +154,22 @@ const LearnComponent = ({ onStartQuiz, onChangeView }) => {
 
     showLearnData();
   }, []);
+
+  const handleSelectEdu = async (eduId) => {
+
+    try {
+      setLoading(true);
+      setError(null);
+      setSelectedEduId(eduId);
+
+      const wordsData = await loadWordsByEduId(eduId);
+      setWords(wordsData);
+    } catch (error) {
+      setError("단어 목록을 불러오지 못했어요.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <S.Page>
@@ -172,7 +234,11 @@ const LearnComponent = ({ onStartQuiz, onChangeView }) => {
                       {lesson.buttonText}
                     </S.LessonStartButton>
                   ) : (
-                    <S.LessonButton type="button" $status={lesson.status}>
+                    <S.LessonButton
+                      type="button"
+                      $status={lesson.status}
+                      onClick={() => handleSelectEdu(lesson.id)}
+                    >
                       {lesson.buttonText}
                     </S.LessonButton>
                   )}
@@ -180,7 +246,18 @@ const LearnComponent = ({ onStartQuiz, onChangeView }) => {
               </S.LessonItem>
             ))}
           </S.RoadMap>
-
+          {/* 임시 출력 */}
+          {words.length > 0 && (
+            <div>
+              {words.map((word) => (
+                <div key={word.id}>
+                  <strong>{word.wordsTitle}</strong>
+                  <p>{word.wordsDetail}</p>
+                </div>
+              ))}
+            </div>
+          )}
+          
           <S.NextChapter type="button">
             <strong>{data.nextChapter.title}</strong>
             <span>{data.nextChapter.desc}</span>
