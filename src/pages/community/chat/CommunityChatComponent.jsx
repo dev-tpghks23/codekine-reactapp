@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import LiveChatCard from "./chatComponents/LiveChatCard";
 import { ColumnBlock, ActionBtn, RowBlock } from "../communityStyle";
 import T from "../communityTextStyle";
 import styled from "styled-components";
@@ -7,7 +6,6 @@ import { flexCenterRow } from "../../../styles/common";
 import { useChatContext } from "../context/ChatContext";
 import { getChatRooms } from "../communityApi/chatApi";
 
-import LiveChatCardCandidate1 from "../chat/chatComponents/chatCardCandidate/LiveChatCardCandidate1.jsx";
 import LiveChatCardCandidate2 from "../chat/chatComponents/chatCardCandidate/LiveChatCardCandidate2.jsx";
 
 const HeaderBlock = styled.div`
