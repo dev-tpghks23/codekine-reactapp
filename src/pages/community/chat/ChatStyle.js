@@ -4,13 +4,13 @@ import styled from "styled-components";
 import { colors, fonts, radius } from "../constants";
 import T from "../communityTextStyle";
 import {
-  flexBetweenRow,
   flexCenterColumn,
   flexCenterRow,
   h11Bold,
   h12Bold,
   h12Regular,
 } from "../../../styles/common";
+import theme from "../../../styles/theme";
 
 export const ORANGE = "#ff8004";
 export const ORANGE_LIGHT = "#fff3e8";
@@ -46,7 +46,6 @@ const Header = styled.div`
   );
   border-radius: ${radius.card} ${radius.card} 0 0;
   width: 100%;
-  /* ${flexBetweenRow} */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -165,48 +164,11 @@ const MinimizeBtn = styled.button`
   padding: 0;
   font-size: 10px;
   flex-shrink: 0;
-  /* img {
-    width: 60%;
-    height: 60%;
-    object-fit: contain;
-  } */
 `;
-// const MinimizeBtn = styled.button`
-//   background: ${colors.overlayWhite15};
-//   border: none;
-//   border-radius: 6px;
-//   width: 20px;
-//   height: 20px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   cursor: pointer;
-//   overflow: hidden;
-//   img {
-//     width: 40%;
-//     height: 40%;
-//     object-fit: contain;
-//   }
-// `;
 
 const CloseBtn = styled(MinimizeBtn)`
   background: rgba(255, 80, 80, 0.5);
 `;
-// const CloseBtn = styled.button`
-//   background: ${colors.dangerOverlay};
-//   border: none;
-//   border-radius: 6px;
-//   width: 20px;
-//   height: 20px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   cursor: pointer;
-//   img {
-//     width: 8px;
-//     height: 9px;
-//   }
-// `;
 
 // ─── Body ──────────────────────────────────────────────────────────────────────
 
@@ -344,7 +306,7 @@ const CenterPanel = styled.div`
 const MessagesArea = styled.div`
   flex: 1;
   min-height: 0;
-  background: ${colors.bgCard};
+  background: ${theme.GRAYSCALE[10]};
   border-bottom: 1px solid ${colors.border};
   display: flex;
   flex-direction: column;
@@ -713,6 +675,7 @@ const SelectHeader = styled.div`
     ${colors.primary} 100%
   );
   border-radius: ${radius.card} ${radius.card} 0 0;
+  width: 100%;
   height: 72px;
   display: flex;
   align-items: center;
@@ -737,23 +700,23 @@ const HeaderBtns = styled.div`
   gap: 6px;
 `;
 
-const SelectCloseBtn = styled.button`
-  background: ${colors.dangerOverlay};
-  border: none;
-  border-radius: 6px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 5px 6px;
-  img {
-    width: 8px;
-    height: 9px;
-    object-fit: contain;
-  }
-`;
+// const SelectCloseBtn = styled.button`
+//   background: ${colors.dangerOverlay};
+//   border: none;
+//   border-radius: 6px;
+//   width: 20px;
+//   height: 20px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   padding: 5px 6px;
+//   img {
+//     width: 8px;
+//     height: 9px;
+//     object-fit: contain;
+//   }
+// `;
 
 const SelectBody = styled.div`
   display: flex;
@@ -1154,7 +1117,7 @@ export {
   SelectHeader,
   HeaderTitle,
   HeaderBtns,
-  SelectCloseBtn,
+  // SelectCloseBtn,
   SelectBody,
   SelectLeftPanel,
   PanelTop,

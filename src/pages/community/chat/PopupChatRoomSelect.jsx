@@ -9,6 +9,7 @@ import {
   LeaveBtn,
   MinimizeBtn,
   CloseBtn,
+  Header,
 } from "./ChatStyle";
 import SelectRoomListPanel from "./popupChat/SelectRoomListPanel";
 import SelectOngoingPanel from "./popupChat/SelectOngoingPanel";
@@ -22,6 +23,7 @@ const S = {
   SelectHeader,
   HeaderTitle,
   HeaderBtns,
+  Header,
   SelectBody,
   LeaveBtn,
   MinimizeBtn,
@@ -36,7 +38,7 @@ const PopupChatRoomSelect = () => {
   return (
     <S.SelectPageBg>
       <S.SelectPopup>
-        <S.SelectHeader>
+        <S.Header>
           <S.HeaderTitle>채팅방 선택</S.HeaderTitle>
           <S.HeaderBtns>
             <S.MinimizeBtn onClick={handleSelectMinimize}>
@@ -46,7 +48,7 @@ const PopupChatRoomSelect = () => {
               <img src={closeIcon} alt="닫기" />
             </S.CloseBtn>
           </S.HeaderBtns>
-        </S.SelectHeader>
+        </S.Header>
 
         <S.SelectBody>
           <SelectRoomListPanel />

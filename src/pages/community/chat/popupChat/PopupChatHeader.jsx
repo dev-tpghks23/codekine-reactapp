@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import {
   Header,
   HeaderLeft,
@@ -15,16 +14,18 @@ import {
   TodayMsgText,
   HeaderRight,
   LeaveBtn,
+  MinimizeBtn,
+  CloseBtn,
 } from "../ChatStyle";
 import { ThumbnailBox } from "../chatComponents/chatComponentStyle";
 import defaultProfileImg from "../../assets/chat/chat_default_profile.svg";
 import { useChatContext } from "../../context/ChatContext";
-import { colors } from "../../constants";
 import chatIcon from "../../assets/chat/chat_icon.svg";
 import minusIcon from "../../assets/chat/minus_icon.svg";
 import closeIcon from "../../assets/chat/close_icon.svg";
 
 const S = {
+  CloseBtn,
   Header,
   HeaderLeft,
   ProfileArea,
@@ -32,6 +33,7 @@ const S = {
   RoomTitle,
   RoomSubText,
   MessageStatus,
+  MinimizeBtn,
   LiveBadge,
   LiveIcon,
   LiveText,
@@ -43,27 +45,6 @@ const S = {
 
 const liveVectorUrl =
   "https://www.figma.com/api/mcp/asset/79378b34-81dd-4aef-bc8a-2e9814e941b7";
-
-// 채팅방 헤더 임시 버튼
-const HeaderBtn = styled.button`
-  width: 30px;
-  height: 30px;
-  border: none;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.15);
-  color: ${colors.textWhite};
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  font-size: 10px;
-  flex-shrink: 0;
-`;
-
-const CloseBtn = styled(HeaderBtn)`
-  background: rgba(255, 80, 80, 0.5);
-`;
 
 const PopupChatHeader = ({ chatRoomInfo }) => {
   const { handleLeave, minimizeChat, closeChat } = useChatContext();
@@ -99,12 +80,12 @@ const PopupChatHeader = ({ chatRoomInfo }) => {
       </S.HeaderLeft>
       <S.HeaderRight>
         <S.LeaveBtn onClick={handleLeave}>채팅방 나가기</S.LeaveBtn>
-        <HeaderBtn onClick={minimizeChat}>
+        <S.MinimizeBtn onClick={minimizeChat}>
           <img src={minusIcon} alt="최소화" />
-        </HeaderBtn>
-        <CloseBtn onClick={closeChat}>
+        </S.MinimizeBtn>
+        <S.CloseBtn onClick={closeChat}>
           <img src={closeIcon} alt="닫기" />
-        </CloseBtn>
+        </S.CloseBtn>
       </S.HeaderRight>
     </S.Header>
   );

@@ -86,6 +86,7 @@ const PopupChatCenter = ({ messages, onSendMessage }) => {
 
   return (
     <S.CenterPanel>
+      {/* 메세지 나열 되는곳 */}
       <S.MessagesArea>
         {messages.map((msg) =>
           !msg.chatIsMe ? (
@@ -112,6 +113,8 @@ const PopupChatCenter = ({ messages, onSendMessage }) => {
         )}
         <div ref={messagesEndRef} />
       </S.MessagesArea>
+
+      {/* 메세지 작성하는곳 */}
       <S.InputArea>
         <S.AttachRow>
           <S.AttachIcons>
