@@ -12,7 +12,7 @@ export const statusStyle = (status) => {
 
 export const styles = {
   page: {
-    fontFamily: "'Pretendard', 'Noto Sans KR', sans-serif",
+    fontFamily: "'Pretendard', sans-serif",
     minHeight: "100vh",
     background: LIGHT_GRAY,
     color: TEXT_BLACK,
@@ -202,7 +202,7 @@ export const styles = {
     letterSpacing: "-0.5px",
   },
   heroSub: {
-    fontSize: 12,
+    fontSize: 13,
     color: GRAY,
     margin: 0,
   },
@@ -226,21 +226,21 @@ export const styles = {
     display: "flex",
     alignItems: "center",
     gap: 10,
-    fontSize: 12,
-    fontWeight: 500,
+    fontSize: 13,
+    fontWeight: 400,
     color: DARK_BLUE,
   },
 
   // Section Titles
   sectionTitle: {
-    fontSize: 17,
+    fontSize: 18,
     fontWeight: 700,
     color: "#111",
     margin: "0 0 14px",
     letterSpacing: "-0.3px",
   },
   sectionTitleSm: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: 700,
     color: "#111",
     margin: "0 0 14px",
@@ -281,12 +281,12 @@ export const styles = {
     flexShrink: 0,
   },
   infoCardTitle: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 700,
     color: TEXT_BLACK,
   },
   infoCardSub: {
-    fontSize: 11,
+    fontSize: 12,
     color: GRAY,
     marginTop: 2,
   },

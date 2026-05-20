@@ -1,8 +1,11 @@
 import { useState } from "react";
 import * as S from "./style";
+import { formatPhone, formatLicenseNo } from "../../inputFormat";
 
 const RenewComponent = () => {
   const [type, setType] = useState("renew");
+  const [licenseNo, setLicenseNo] = useState("");
+  const [phone, setPhone] = useState("");
 
   return (
     <S.Wrapper>
@@ -34,7 +37,11 @@ const RenewComponent = () => {
         <S.Grid>
           <div>
             <S.Label>자격증 번호 *</S.Label>
-            <S.Input placeholder="예: SL-2023-001234" />
+            <S.Input
+              placeholder="예: SL-2023-001234"
+              value={licenseNo}
+              onChange={e => setLicenseNo(formatLicenseNo(e.target.value))}
+            />
           </div>
           <div>
             <S.Label>성명 *</S.Label>
@@ -42,7 +49,11 @@ const RenewComponent = () => {
           </div>
           <div>
             <S.Label>연락처 *</S.Label>
-            <S.Input placeholder="010-0000-0000" />
+            <S.Input
+              placeholder="010-0000-0000"
+              value={phone}
+              onChange={e => setPhone(formatPhone(e.target.value))}
+            />
           </div>
           <div>
             <S.Label>배송 주소 *</S.Label>
