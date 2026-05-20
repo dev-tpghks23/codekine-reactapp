@@ -1,5 +1,39 @@
 import React from "react";
-import S from "../ChatStyle";
+import {
+  SelectRightPanel,
+  PanelHeader,
+  PanelLabel,
+  SelectCountBadge,
+  Divider,
+  OngoingRoomList,
+  OngoingRoomItem,
+  OngoingProfileBox,
+  OngoingRoomInfo,
+  OngoingRoomTopRow,
+  OngoingRoomNameRow,
+  OngoingRoomName,
+  OngoingRoomCount,
+  OngoingLastTime,
+  OngoingLastMsg,
+} from "../ChatStyle";
+
+const S = {
+  SelectRightPanel,
+  PanelHeader,
+  PanelLabel,
+  SelectCountBadge,
+  Divider,
+  OngoingRoomList,
+  OngoingRoomItem,
+  OngoingProfileBox,
+  OngoingRoomInfo,
+  OngoingRoomTopRow,
+  OngoingRoomNameRow,
+  OngoingRoomName,
+  OngoingRoomCount,
+  OngoingLastTime,
+  OngoingLastMsg,
+};
 
 const ONGOING_ROOMS = [
   {

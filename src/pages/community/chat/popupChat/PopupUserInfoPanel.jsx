@@ -1,7 +1,40 @@
 import React from "react";
 import { colors } from "../../constants";
 import OutlineButton from "../../common/OutlineButton";
-import S, { ORANGE } from "../ChatStyle";
+import {
+  RightPanelScroll,
+  UserInfoTopSection,
+  UserInfoSectionHeader,
+  UserInfoSectionTitle,
+  Divider,
+  UserBigAvatarBox,
+  UserInfoName,
+  LevelRoleBadge,
+  PanelSection,
+  SectionLabel,
+  ActionDescText,
+  ReportCard,
+  ReportCardTitle,
+  ReportCardDesc,
+  ORANGE,
+} from "../ChatStyle";
+
+const S = {
+  RightPanelScroll,
+  UserInfoTopSection,
+  UserInfoSectionHeader,
+  UserInfoSectionTitle,
+  Divider,
+  UserBigAvatarBox,
+  UserInfoName,
+  LevelRoleBadge,
+  PanelSection,
+  SectionLabel,
+  ActionDescText,
+  ReportCard,
+  ReportCardTitle,
+  ReportCardDesc,
+};
 
 const PopupUserInfoPanel = ({ user, onClose }) => (
   <S.RightPanelScroll>

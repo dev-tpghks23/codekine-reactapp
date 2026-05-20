@@ -1,7 +1,39 @@
 import React from "react";
-import S from "../ChatStyle";
+import {
+  LeftPanel,
+  ParticipantHeader,
+  ParticipantLabel,
+  CountBadge,
+  Divider,
+  UserList,
+  UserItem,
+  UserProfileRow,
+  AvatarWrap,
+  OnlineDot,
+  UserMeta,
+  UserNameText,
+  UserRoleText,
+  LevelBadge,
+} from "../ChatStyle";
 import { PopupThumbnailBox } from "../chatComponents/chatComponentStyle";
 import defaultProfile from "../../assets/chat/chat_default_profile.svg";
+
+const S = {
+  LeftPanel,
+  ParticipantHeader,
+  ParticipantLabel,
+  CountBadge,
+  Divider,
+  UserList,
+  UserItem,
+  UserProfileRow,
+  AvatarWrap,
+  OnlineDot,
+  UserMeta,
+  UserNameText,
+  UserRoleText,
+  LevelBadge,
+};
 
 const onlineDotUrl =
   "https://www.figma.com/api/mcp/asset/b33f6cd4-cc19-4c37-9250-813cb5dca21d";

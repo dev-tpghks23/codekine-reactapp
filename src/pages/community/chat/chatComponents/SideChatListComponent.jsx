@@ -4,6 +4,9 @@ import { colors, radius } from "../../constants";
 import { h10Bold, h11Bold, h11Regular } from "../../../../styles/common";
 import chatDefaultProfile from "../../assets/chat/chat_default_profile.svg";
 import { ThumbnailBox } from "./chatComponentStyle";
+import useChatRoomList from "../hooks/useChatRoomList";
+
+import defaultProfileImg from "../../assets/chat/chat_default_profile.svg";
 
 // ─── List Body ───────────────────────────────────────────────────────────────
 
@@ -22,6 +25,14 @@ const RoomList = styled.div`
   flex-direction: column;
   height: 280px;
   overflow-y: auto;
+`;
+
+const LoaderRow = styled.div`
+  padding: 8px 0;
+  text-align: center;
+  ${h11Regular}
+  color: ${colors.textSub};
+  flex-shrink: 0;
 `;
 
 // ─── Room Item ───────────────────────────────────────────────────────────────
@@ -49,7 +60,6 @@ const RoomLeft = styled.div`
   align-items: center;
   gap: 12px;
 `;
-
 
 const RoomInfo = styled.div`
   display: flex;
@@ -118,16 +128,6 @@ const TabBtn = styled.button`
     color 0.15s;
 `;
 
-// ─── Default Data ─────────────────────────────────────────────────────────────
-
-const defaultRooms = [
-  { id: 1, name: "수어 학습 질문방", count: 84, isLive: true },
-  { id: 2, name: "수어 학습 질문방", count: 0, isLive: true },
-  { id: 3, name: "수어 학습 질문방", count: 0, isLive: true },
-  { id: 4, name: "수어 학습 질문방", count: 0, isLive: true },
-  { id: 5, name: "수어 학습 질문방", count: 0, isLive: true },
-];
-
 const TABS = [
   { key: "all", label: "모든 채팅방" },
   { key: "chatting", label: "채팅중인 방" },
@@ -136,13 +136,12 @@ const TABS = [
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-const SideChatListComponent = ({
-  rooms = defaultRooms,
-  onRoomClick,
-  onTabChange,
-}) => {
+const SideChatListComponent = ({ onRoomClick, onTabChange }) => {
   const [activeTab, setActiveTab] = useState("all");
-  const [selectedRoomId, setSelectedRoomId] = useState(rooms[0]?.id ?? null);
+  const [selectedRoomId, setSelectedRoomId] = useState(null);
+  const { rooms, isLoading, hasMore, loaderRef } = useChatRoomList();
+
+  console.log("사이트 채팅방 리스트");
 
   const handleRoomClick = (room) => {
     setSelectedRoomId(room.id);
@@ -159,9 +158,13 @@ const SideChatListComponent = ({
             onClick={() => handleRoomClick(room)}
           >
             <RoomLeft>
+              {/* 방 썸네일 */}
               <ThumbnailBox
                 src={room.thumbnail || chatDefaultProfile}
                 alt={room.name}
+                onError={(e) => {
+                  e.target.src = defaultProfileImg;
+                }}
               />
               <RoomInfo>
                 <RoomName>{room.name}</RoomName>
@@ -176,6 +179,14 @@ const SideChatListComponent = ({
             <CountText>{room.count}명</CountText>
           </RoomItem>
         ))}
+        {hasMore && (
+          <LoaderRow ref={loaderRef}>
+            {isLoading ? "불러오는 중..." : ""}
+          </LoaderRow>
+        )}
+        {!hasMore && rooms.length === 0 && !isLoading && (
+          <LoaderRow>채팅방이 없습니다.</LoaderRow>
+        )}
       </RoomList>
 
       <TabGroup>

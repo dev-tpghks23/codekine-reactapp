@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ColumnBlock, ActionBtn, CategoryPill } from "../communityStyle";
 import T from "../communityTextStyle";
-import LiveChatCard from "../chat/chatComponents/LiveChatCard";
 import PostListSection from "./postComponents/PostListSection.jsx";
 import { useChatContext } from "../context/ChatContext";
 import { POST_CATEGORIES } from "../constants";
@@ -15,10 +14,6 @@ import {
   AllChatButton,
 } from "./communityPostContainerStyle";
 import LiveChatCardCandidate1 from "../chat/chatComponents/chatCardCandidate/LiveChatCardCandidate1.jsx";
-
-import LiveChatCardCandidate2 from "../chat/chatComponents/chatCardCandidate/LiveChatCardCandidate2.jsx";
-
-import LiveChatCardCandidate3 from "../chat/chatComponents/chatCardCandidate/LiveChatCardCandidate3.jsx";
 
 const S = {
   ColumnBlock,
