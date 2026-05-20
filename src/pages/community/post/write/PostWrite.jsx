@@ -29,7 +29,7 @@ import {
   InputField,
   LabelText,
   LeftBlock,
-  Page,
+  PostWritePage,
   RequiredMark,
   RightBlock,
   SaveIcon,
@@ -43,11 +43,11 @@ import {
   WriteCard,
 } from "./postWriteStyle";
 
-/* ── 에셋 URL ── */
-const iconUpload =
-  "https://www.figma.com/api/mcp/asset/66deb0b8-9f0e-48ef-945b-0aec781f7f86";
-const iconSaveNotice =
-  "https://www.figma.com/api/mcp/asset/8cb6e2d2-bd5f-4c73-a458-90a2d56008bc";
+import { Page } from "../../communityStyle";
+
+// 파일 업로드 내 파일
+import postFileUpload from "../../assets/postWrite/post-file-upload.svg";
+import postTempSaveInfo from "../../assets/postWrite/post-temp-save-info.svg";
 
 const CATEGORIES = [
   "전체",
@@ -85,6 +85,7 @@ const PostWrite = () => {
     LabelText,
     LeftBlock,
     Page,
+    PostWritePage,
     RequiredMark,
     RightBlock,
     SaveIcon,
@@ -99,7 +100,7 @@ const PostWrite = () => {
   };
 
   return (
-    <S.Page>
+    <S.PostWritePage>
       {/* 콘텐츠 영역 */}
       <S.ContentArea>
         {/* 왼쪽: 작성 영역 (984px) */}
@@ -171,7 +172,7 @@ const PostWrite = () => {
                   <S.LabelText>첨부파일</S.LabelText>
                 </S.FieldLabel>
                 <S.FileDropZone>
-                  <S.UploadIcon src={iconUpload} alt="파일 업로드" />
+                  <S.UploadIcon src={postFileUpload} alt="파일 업로드" />
                   <S.FileDropTitle>
                     파일을 드래그하거나 클릭해서 첨부하세요
                   </S.FileDropTitle>
@@ -218,7 +219,7 @@ const PostWrite = () => {
 
           {/* 자동 임시저장 알림 */}
           <S.SaveNotice>
-            <S.SaveIcon src={iconSaveNotice} alt="" />
+            <S.SaveIcon src={postTempSaveInfo} alt="" />
             <S.SaveText>
               {
                 "작성 중인 글은 자동으로 임시 저장됩니다.\n언제든지 이어서 작성할 수 있어요."
@@ -227,7 +228,7 @@ const PostWrite = () => {
           </S.SaveNotice>
         </S.RightBlock>
       </S.ContentArea>
-    </S.Page>
+    </S.PostWritePage>
   );
 };
 
