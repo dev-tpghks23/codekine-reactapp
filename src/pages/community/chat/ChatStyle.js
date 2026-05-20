@@ -133,8 +133,8 @@ const LeaveBtn = styled.button`
   background: ${colors.dangerOverlay};
   border: none;
   border-radius: 6px;
-  height: 20px;
-  width: 79px;
+  height: 30px;
+  width: 80px;
   cursor: pointer;
   ${h12Regular}
   color: ${colors.textWhite};
