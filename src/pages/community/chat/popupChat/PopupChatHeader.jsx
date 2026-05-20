@@ -12,8 +12,6 @@ import { colors } from "../../constants";
 
 const liveVectorUrl =
   "https://www.figma.com/api/mcp/asset/79378b34-81dd-4aef-bc8a-2e9814e941b7";
-const closeVUrl =
-  "https://www.figma.com/api/mcp/asset/633d41af-e1e1-462a-acec-b1534e4d49ad";
 
 // 채팅방 헤더 임시 버튼
 const HeaderBtn = styled.button`

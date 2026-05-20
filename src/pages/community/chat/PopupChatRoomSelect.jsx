@@ -4,10 +4,31 @@ import SelectRoomListPanel from "./popupChat/SelectRoomListPanel";
 import SelectOngoingPanel from "./popupChat/SelectOngoingPanel";
 import { useChatContext } from "../context/ChatContext";
 
-const minimizeVUrl =
-  "https://www.figma.com/api/mcp/asset/44666575-71f6-416e-a884-3df8697b8a6e";
-const closeVUrl =
-  "https://www.figma.com/api/mcp/asset/4b5d23e6-44b7-4a45-8a8f-9ed805ef3301";
+import minusIcon from "../assets/chat/minus_icon.svg";
+import closeIcon from "../assets/chat/close_icon.svg";
+import styled from "styled-components";
+import { colors } from "../constants";
+
+// 채팅방 헤더 임시 버튼
+const HeaderBtn = styled.button`
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  color: ${colors.textWhite};
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 10px;
+  flex-shrink: 0;
+`;
+
+const CloseBtn = styled(HeaderBtn)`
+  background: rgba(255, 80, 80, 0.5);
+`;
 
 const PopupChatRoomSelect = () => {
   const { handleSelectMinimize, handleSelectClose } = useChatContext();
@@ -18,12 +39,12 @@ const PopupChatRoomSelect = () => {
         <S.SelectHeader>
           <S.HeaderTitle>채팅방 선택</S.HeaderTitle>
           <S.HeaderBtns>
-            <S.MinimizeBtn onClick={handleSelectMinimize}>
-              <img src={minimizeVUrl} alt="최소화" />
-            </S.MinimizeBtn>
-            <S.SelectCloseBtn onClick={handleSelectClose}>
-              <img src={closeVUrl} alt="닫기" />
-            </S.SelectCloseBtn>
+            <HeaderBtn onClick={handleSelectMinimize}>
+              <img src={minusIcon} alt="최소화" />
+            </HeaderBtn>
+            <CloseBtn onClick={handleSelectClose}>
+              <img src={closeIcon} alt="닫기" />
+            </CloseBtn>
           </S.HeaderBtns>
         </S.SelectHeader>
 

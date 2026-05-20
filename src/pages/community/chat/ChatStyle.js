@@ -49,8 +49,8 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
   height: 72px;
 `;
 
@@ -687,11 +687,12 @@ const SelectHeader = styled.div`
     ${colors.primary} 100%
   );
   border-radius: ${radius.card} ${radius.card} 0 0;
-  height: 64px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding-left: 16px;
+  padding-right: 16px;
 `;
 
 const HeaderTitle = styled.p`
