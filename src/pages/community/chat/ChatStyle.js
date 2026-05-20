@@ -36,6 +36,7 @@ const Popup = styled.div`
 
 // ─── Header ────────────────────────────────────────────────────────────────────
 
+// 채팅방 자체 해더
 const Header = styled.div`
   background: linear-gradient(
     175.28deg,
@@ -44,8 +45,13 @@ const Header = styled.div`
   );
   border-radius: ${radius.card} ${radius.card} 0 0;
   width: 100%;
-  ${flexBetweenRow}
-  padding: 12px;
+  /* ${flexBetweenRow} */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 72px;
 `;
 
 const HeaderLeft = styled.div`
