@@ -13,6 +13,7 @@ import {
 import {
   flexBetweenTopRow,
   flexStartColumn,
+  Page,
   textFieldStyle,
 } from "../../communityStyle";
 import { LAYOUT, RADIUS } from "../../constants";
@@ -38,11 +39,8 @@ const hintStyle = css`
 `;
 
 /* ══ Page ══ */
-export const Page = styled.div`
-  background: ${theme.GRAYSCALE[10]};
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+export const PostWritePage = styled(Page)`
+  padding-top: 0px;
 `;
 
 /* ══ Content Area ══ */

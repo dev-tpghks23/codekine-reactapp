@@ -4,9 +4,43 @@ import { useChatContext } from "../../context/ChatContext";
 import OutlineButton from "../../common/OutlineButton";
 import ToggleSwitch from "../../common/ToggleSwitch";
 import T from "../../communityTextStyle";
-import S from "../ChatStyle";
+import {
+  RightPanelScroll,
+  PanelSection,
+  RoomTitleCenter,
+  RoomTitleText,
+  StatusRow,
+  LiveStatusRow,
+  LiveDot,
+  LiveLabel,
+  ParticipantCount,
+  SectionLabel,
+  IntroText,
+  TagGrid,
+  Tag,
+  AccessRow,
+  AccessLabel,
+} from "../ChatStyle";
 import { PopupChatRoomInfoThumbnail } from "../chatComponents/chatComponentStyle";
 import defaultProfileImg from "../../assets/chat/chat_default_profile.svg";
+
+const S = {
+  RightPanelScroll,
+  PanelSection,
+  RoomTitleCenter,
+  RoomTitleText,
+  StatusRow,
+  LiveStatusRow,
+  LiveDot,
+  LiveLabel,
+  ParticipantCount,
+  SectionLabel,
+  IntroText,
+  TagGrid,
+  Tag,
+  AccessRow,
+  AccessLabel,
+};
 
 const liveVectorUrl =
   "https://www.figma.com/api/mcp/asset/79378b34-81dd-4aef-bc8a-2e9814e941b7";

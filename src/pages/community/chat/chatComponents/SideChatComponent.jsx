@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { colors, fonts, radius } from "../../constants";
 import ChatMessage from "./ChatMessage";
+import useChatRoom from "../hooks/useChatRoom";
 
 // ─── Body ────────────────────────────────────────────────────────────────────
 
@@ -76,34 +77,12 @@ const ViewAllText = styled.p`
   text-align: center;
 `;
 
-// ─── Default Data ─────────────────────────────────────────────────────────────
-
-const defaultMessages = [
-  { id: 1, isMine: false, username: "ㅇㅇ", message: "메세지 메세지", time: "14:02" },
-  { id: 2, isMine: false, username: "ㅇㅇ", message: "메세지 메세지", time: "14:02" },
-  { id: 3, isMine: false, username: "ㅇㅇ", message: "내 프로필에 와줘서 고마워.", time: "14:02" },
-  { id: 4, isMine: true, message: "안녕하세요! 오늘도 열공해요 💪", time: "15:00" },
-  { id: 5, isMine: false, username: "ㅇㅇ", message: "메세지 메세지", time: "14:02" },
-  {
-    id: 6,
-    isMine: true,
-    message: "안녕하세요! 오늘도 열공해요 💪안녕하세요! 오늘도 열공해안녕하세요! 오늘도 열공해",
-    time: "15:00",
-  },
-  {
-    id: 7,
-    isMine: false,
-    username: "ㅇㅇ",
-    message: "여러줄 메세지 여러줄 메세지 여러줄 메세지 여러줄 메세지 여러줄 메세지 여러줄 메세지 여러줄 메세지",
-    time: "14:02",
-  },
-];
-
 // ─── Component ────────────────────────────────────────────────────────────────
 
-const SideChatComponent = ({ messages = defaultMessages, onViewAll }) => {
+const SideChatComponent = ({ chatRoomId, onViewAll }) => {
   const [inputValue, setInputValue] = useState("");
   const messageListRef = useRef(null);
+  const { messages, sendMessage } = useChatRoom(chatRoomId);
 
   useEffect(() => {
     if (messageListRef.current) {
@@ -113,6 +92,7 @@ const SideChatComponent = ({ messages = defaultMessages, onViewAll }) => {
 
   const handleSend = () => {
     if (!inputValue.trim()) return;
+    sendMessage(inputValue);
     setInputValue("");
   };
 
@@ -127,10 +107,10 @@ const SideChatComponent = ({ messages = defaultMessages, onViewAll }) => {
           <ChatMessage
             key={msg.id}
             isMine={msg.isMine}
-            message={msg.message}
+            message={msg.content}
             time={msg.time}
             username={msg.username}
-            profileImage={msg.profileImage ?? null}
+            profileImage={msg.profileImage}
           />
         ))}
       </MessageList>

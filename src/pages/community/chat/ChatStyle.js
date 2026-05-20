@@ -4,13 +4,13 @@ import styled from "styled-components";
 import { colors, fonts, radius } from "../constants";
 import T from "../communityTextStyle";
 import {
-  flexBetweenRow,
   flexCenterColumn,
   flexCenterRow,
   h11Bold,
   h12Bold,
   h12Regular,
 } from "../../../styles/common";
+import theme from "../../../styles/theme";
 
 export const ORANGE = "#ff8004";
 export const ORANGE_LIGHT = "#fff3e8";
@@ -34,8 +34,10 @@ const Popup = styled.div`
   ${flexCenterColumn}
 `;
 
+// 팝업 채팅방
 // ─── Header ────────────────────────────────────────────────────────────────────
 
+// 채팅방 자체 해더
 const Header = styled.div`
   background: linear-gradient(
     175.28deg,
@@ -44,8 +46,12 @@ const Header = styled.div`
   );
   border-radius: ${radius.card} ${radius.card} 0 0;
   width: 100%;
-  ${flexBetweenRow}
-  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 72px;
 `;
 
 const HeaderLeft = styled.div`
@@ -129,12 +135,14 @@ const HeaderRight = styled.div`
   gap: 6px;
 `;
 
+// 팝업채팅방 헤더 우측 버튼
+
 const LeaveBtn = styled.button`
   background: ${colors.dangerOverlay};
   border: none;
   border-radius: 6px;
-  height: 20px;
-  width: 79px;
+  height: 30px;
+  width: 80px;
   cursor: pointer;
   ${h12Regular}
   color: ${colors.textWhite};
@@ -143,37 +151,23 @@ const LeaveBtn = styled.button`
 `;
 
 const MinimizeBtn = styled.button`
-  background: ${colors.overlayWhite15};
+  width: 30px;
+  height: 30px;
   border: none;
   border-radius: 6px;
-  width: 20px;
-  height: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  color: ${colors.textWhite};
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  overflow: hidden;
-  img {
-    width: 40%;
-    height: 40%;
-    object-fit: contain;
-  }
+  padding: 0;
+  font-size: 10px;
+  flex-shrink: 0;
 `;
 
-const CloseBtn = styled.button`
-  background: ${colors.dangerOverlay};
-  border: none;
-  border-radius: 6px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  img {
-    width: 8px;
-    height: 9px;
-  }
+const CloseBtn = styled(MinimizeBtn)`
+  background: rgba(255, 80, 80, 0.5);
 `;
 
 // ─── Body ──────────────────────────────────────────────────────────────────────
@@ -312,7 +306,7 @@ const CenterPanel = styled.div`
 const MessagesArea = styled.div`
   flex: 1;
   min-height: 0;
-  background: ${colors.bgCard};
+  background: ${theme.GRAYSCALE[10]};
   border-bottom: 1px solid ${colors.border};
   display: flex;
   flex-direction: column;
@@ -681,11 +675,13 @@ const SelectHeader = styled.div`
     ${colors.primary} 100%
   );
   border-radius: ${radius.card} ${radius.card} 0 0;
-  height: 64px;
+  width: 100%;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding-left: 16px;
+  padding-right: 16px;
 `;
 
 const HeaderTitle = styled.p`
@@ -704,23 +700,23 @@ const HeaderBtns = styled.div`
   gap: 6px;
 `;
 
-const SelectCloseBtn = styled.button`
-  background: ${colors.dangerOverlay};
-  border: none;
-  border-radius: 6px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 5px 6px;
-  img {
-    width: 8px;
-    height: 9px;
-    object-fit: contain;
-  }
-`;
+// const SelectCloseBtn = styled.button`
+//   background: ${colors.dangerOverlay};
+//   border: none;
+//   border-radius: 6px;
+//   width: 20px;
+//   height: 20px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   padding: 5px 6px;
+//   img {
+//     width: 8px;
+//     height: 9px;
+//     object-fit: contain;
+//   }
+// `;
 
 const SelectBody = styled.div`
   display: flex;
@@ -1031,7 +1027,7 @@ const OngoingLastMsg = styled.p`
   white-space: nowrap;
 `;
 
-const S = {
+export {
   PageBg,
   Popup,
   Header,
@@ -1121,7 +1117,7 @@ const S = {
   SelectHeader,
   HeaderTitle,
   HeaderBtns,
-  SelectCloseBtn,
+  // SelectCloseBtn,
   SelectBody,
   SelectLeftPanel,
   PanelTop,
@@ -1156,5 +1152,3 @@ const S = {
   OngoingLastTime,
   OngoingLastMsg,
 };
-
-export default S;
