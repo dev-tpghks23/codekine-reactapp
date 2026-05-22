@@ -16,7 +16,7 @@ import {
 export const VIEW = {
   POPUP: "popup",
   SIDE: "side",
-  // null = 닫힘 (activeChatRoom 이 있으면 플로팅 버튼이 노출됨)
+  // null = 닫힘 (chatRoomDTO 이 있으면 플로팅 버튼이 노출됨)
 };
 
 // 화면 종류: 채팅방 안인지 / 채팅방을 고르는 화면인지
@@ -39,7 +39,7 @@ export const LIST_FILTER = {
 const ChatContext = createContext(null);
 
 export const ChatProvider = ({ children }) => {
-  const [activeChatRoom, setActiveChatRoom] = useState(null);
+  const [chatRoomDTO, setChatRoomDTO] = useState(null);
   const [view, setView] = useState(null);
   const [screen, setScreen] = useState(SCREEN.LIST);
   const [listFilter, setListFilter] = useState(LIST_FILTER.LIVE);
@@ -47,21 +47,21 @@ export const ChatProvider = ({ children }) => {
 
   useEffect(() => {
     // TODO: API 연결 시 fetchMyActiveChatRoom() 로 교체
-    setActiveChatRoom(null);
+    setChatRoomDTO(null);
     setIsLoading(false);
   }, []);
 
   // ── 진입 ───────────────────────────────────────────────────────────────
   // 메인의 채팅방 카드 클릭 → 팝업 + 채팅방 화면
   const openChatRoom = useCallback((room) => {
-    setActiveChatRoom(room);
+    setChatRoomDTO(room);
     setScreen(SCREEN.ROOM);
     setView(VIEW.POPUP);
   }, []);
 
   // 목록(사이드/팝업)에서 방 선택 → 현재 view 유지하고 ROOM 으로 전환
   const selectRoom = useCallback((room) => {
-    if (room) setActiveChatRoom(room);
+    if (room) setChatRoomDTO(room);
     setScreen(SCREEN.ROOM);
   }, []);
 
@@ -94,11 +94,11 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   // ── 닫기/재오픈 ────────────────────────────────────────────────────────
-  // LIST 에서 닫으면 채팅 자체 종료 (activeChatRoom 도 제거 → 플로팅 버튼 미노출)
-  // ROOM 에서 닫으면 activeChatRoom 유지 → 플로팅 버튼 노출
+  // LIST 에서 닫으면 채팅 자체 종료 (chatRoomDTO 도 제거 → 플로팅 버튼 미노출)
+  // ROOM 에서 닫으면 chatRoomDTO 유지 → 플로팅 버튼 노출
   const closeView = useCallback(() => {
     if (screen === SCREEN.LIST) {
-      setActiveChatRoom(null);
+      setChatRoomDTO(null);
     }
     setView(null);
   }, [screen]);
@@ -112,7 +112,7 @@ export const ChatProvider = ({ children }) => {
     <ChatContext.Provider
       value={{
         // state
-        activeChatRoom,
+        chatRoomDTO,
         view,
         screen,
         listFilter,

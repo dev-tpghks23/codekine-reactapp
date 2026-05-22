@@ -37,14 +37,14 @@ const TAGS = [
   { label: "#초보환영", bg: "#e1beec", color: "#b63fde" },
 ];
 
-// 메인 에서 채팅방 카드 클릭 시 뜨는 팝업 채팅창
+// 메인 에서 채팅방 카드 클릭 시 뜨는 팝업 채팅창 (채팅방)
 const PopupChatScreen = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [chatRoomInfo, setChatRoomInfo] = useState(null);
   // 프로바이더 에서 현재 사용자가 선택 한 방 정보 불러온 뒤에 채팅방 아이디 할당
-  const { activeChatRoom } = useChatContext();
-  const chatRoomId = activeChatRoom?.id;
+  const { chatRoomDTO } = useChatContext();
+  const chatRoomId = chatRoomDTO?.id;
   const { messages, sendMessage: handleSendMessage } = useChatRoom(chatRoomId);
 
   useEffect(() => {

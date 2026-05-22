@@ -18,6 +18,7 @@ const CommunityChatComponent = () => {
   const { openChatRoom } = useChatContext();
   const [rooms, setRooms] = useState([]);
 
+  // 채팅방 목록에 최초 1회 채팅방 불러오기
   useEffect(() => {
     getChatRooms(1)
       .then((data) => setRooms(data.rooms))
