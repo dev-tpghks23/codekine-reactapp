@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { LAYOUT, radius, shadows } from "../../constants";
-import {
-  useChatContext,
-  SCREEN,
-  LIST_FILTER,
-} from "../../context/ChatContext";
+import { useChatContext, SCREEN, LIST_FILTER } from "../../context/ChatContext";
 import SideChatHeader from "../chatComponents/SideChatHeader";
 import SideChatListComponent from "../chatComponents/SideChatListComponent";
 import SideChatRequestComponent from "../chatComponents/SideChatRequestComponent";
@@ -26,14 +22,8 @@ const ChatPanel = styled.div`
 // ─── Component ────────────────────────────────────────────────────────────────
 
 const SideChat = () => {
-  const {
-    screen,
-    listFilter,
-    activeChatRoom,
-    closeView,
-    expandView,
-    leaveRoom,
-  } = useChatContext();
+  const { screen, listFilter, chatRoomDTO, closeView, expandView, leaveRoom } =
+    useChatContext();
 
   // 사이드의 minus 버튼은 ROOM 화면에선 "목록으로 되돌리기", 그 외엔 "닫기"
   const handleMinimize = screen === SCREEN.ROOM ? leaveRoom : closeView;
@@ -43,7 +33,7 @@ const SideChat = () => {
       <SideChatHeader
         screen={screen}
         listFilter={listFilter}
-        chatPartnerName={activeChatRoom?.name ?? activeChatRoom?.chatRoomName}
+        chatPartnerName={chatRoomDTO?.name ?? chatRoomDTO?.chatRoomName}
         onMinimize={handleMinimize}
         onExpand={expandView}
         onClose={closeView}
@@ -59,10 +49,7 @@ const SideChat = () => {
         <SideChatOngoingComponent />
       )}
       {screen === SCREEN.ROOM && (
-        <SideChatComponent
-          chatRoomId={activeChatRoom?.id}
-          onViewAll={leaveRoom}
-        />
+        <SideChatComponent chatRoomId={chatRoomDTO?.id} onViewAll={leaveRoom} />
       )}
     </ChatPanel>
   );

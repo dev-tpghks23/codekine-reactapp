@@ -8,7 +8,6 @@ import PopupRoomInfoPanel from "./popupChat/PopupRoomInfoPanel";
 import PopupUserInfoPanel from "./popupChat/PopupUserInfoPanel";
 import { useChatContext } from "../context/ChatContext";
 import { getChatRoomUsers, getChatRoomInfo } from "../communityApi/chatApi";
-import useChatRoom from "./hooks/useChatRoom";
 
 const S = {
   PageBg,
@@ -45,8 +44,8 @@ const PopupChatScreen = () => {
   // 프로바이더 에서 현재 사용자가 선택 한 방 정보 불러온 뒤에 채팅방 아이디 할당
   const { chatRoomDTO } = useChatContext();
   const chatRoomId = chatRoomDTO?.id;
-  const { messages, sendMessage: handleSendMessage } = useChatRoom(chatRoomId);
 
+  // 채팅방 정보 불러오기
   useEffect(() => {
     if (!chatRoomId) return;
     getChatRoomInfo(chatRoomId)
@@ -54,6 +53,7 @@ const PopupChatScreen = () => {
       .catch((err) => console.error("채팅방 정보 불러오기 실패:", err));
   }, [chatRoomId]);
 
+  // 채팅방 내 참여 유저들 불러오기
   useEffect(() => {
     if (!chatRoomId) return;
     getChatRoomUsers(chatRoomId)
@@ -70,16 +70,14 @@ const PopupChatScreen = () => {
       <S.Popup>
         <PopupChatHeader chatRoomInfo={chatRoomInfo} />
         <S.Body>
+          {/* 왼쪽 판넬 (참여 유저 목록) */}
           <PopupParticipantList
             users={users}
             selectedUserEmail={selectedUser?.email}
             onUserClick={handleUserClick}
           />
           {/* 채팅 메세지 나열되는 곳 */}
-          <PopupChatCenter
-            messages={messages}
-            onSendMessage={handleSendMessage}
-          />
+          <PopupChatCenter chatRoomId={chatRoomId} />
           <S.RightPanel>
             {selectedUser ? (
               <PopupUserInfoPanel
