@@ -51,24 +51,24 @@ import MyPageWithdrawContainer from "../pages/mypage/withdraw/MyPageWithdrawCont
 import CustomServiceNoticeListContainer from '../pages/customservice/notice/list/CustomServiceNoticeListContainer';
 import CustomServiceNoticeWriteContainer from '../pages/customservice/notice/write/CustomServiceNoticeWriteContainer';
 import CustomServiceNoticeEditContainer from "../pages/customservice/notice/edit/CustomServiceNoticeEditContainer";
-import StudyRefactorContainer from "../pages/studyRefactor/StudyContainer";
-import StudyRefactorComponent from "../pages/studyRefactor/StudyComponent";
-import StudyRefactorExperienceContainer from "../pages/studyRefactor/experience/StudyExperienceContainer";
-import StudyRefactorExperienceComponent from "../pages/studyRefactor/experience/StudyExperienceComponent";
-import StudyRefactorExperienceQuizContainer from "../pages/studyRefactor/experience/StudyExperienceQuizContainer";
-import StudyRefactorExperienceQuizComponent from "../pages/studyRefactor/experience/StudyExperienceQuizComponent";
-import StudyRefactorAttendanceContainer from "../pages/studyRefactor/attendance/StudyAttendanceContainer";
-import StudyRefactorChapterContainer from "../pages/studyRefactor/chapter/StudyChapterContainer";
-import StudyRefactorChapterComponent from "../pages/studyRefactor/chapter/StudyChapterComponent";
-import StudyRefactorChapterQuizContainer from "../pages/studyRefactor/chapter/StudyChapterQuizContainer";
-import StudyRefactorChapterQuizComponent from "../pages/studyRefactor/chapter/StudyChapterQuizComponent";
-import StudyRefactorChapterResultContainer from "../pages/studyRefactor/chapter/StudyChapterResultContainer";
-import StudyRefactorSearchContainer from "../pages/studyRefactor/search/StudySearchContainer";
-import StudyRefactorLearnContainer from "../pages/studyRefactor/learn/LearnContainer";
-import StudyRefactorLearnComponent from "../pages/studyRefactor/learn/LearnComponent";
-import StudyRefactorLearnAlphabetContainer from "../pages/studyRefactor/learn/LearnAlphabetContainer";
-import StudyRefactorLearnQuizContainer from "../pages/studyRefactor/learn/LearnQuizContainer";
-import StudyRefactorLearnQuizComponent from "../pages/studyRefactor/learn/LearnQuizComponent";
+import StudyContainer from "../pages/study/StudyContainer";
+import StudyComponent from "../pages/study/StudyComponent";
+import StudyExperienceContainer from "../pages/study/experience/StudyExperienceContainer";
+import StudyExperienceComponent from "../pages/study/experience/StudyExperienceComponent";
+import StudyExperienceQuizContainer from "../pages/study/experience/StudyExperienceQuizContainer";
+import StudyExperienceQuizComponent from "../pages/study/experience/StudyExperienceQuizComponent";
+import StudyAttendanceContainer from "../pages/study/attendance/StudyAttendanceContainer";
+import StudyChapterContainer from "../pages/study/chapter/StudyChapterContainer";
+import StudyChapterComponent from "../pages/study/chapter/StudyChapterComponent";
+import StudyChapterQuizContainer from "../pages/study/chapter/StudyChapterQuizContainer";
+import StudyChapterQuizComponent from "../pages/study/chapter/StudyChapterQuizComponent";
+import StudyChapterResultContainer from "../pages/study/chapter/StudyChapterResultContainer";
+import StudySearchContainer from "../pages/study/search/StudySearchContainer";
+import StudyLearnContainer from "../pages/study/learn/LearnContainer";
+import StudyLearnComponent from "../pages/study/learn/LearnComponent";
+import StudyLearnAlphabetContainer from "../pages/study/learn/LearnAlphabetContainer";
+import StudyLearnQuizContainer from "../pages/study/learn/LearnQuizContainer";
+import StudyLearnQuizComponent from "../pages/study/learn/LearnQuizComponent";
 import FindAccountContainer from "../pages/auth/find-account/FindAccountContainer";
 
 const router = createBrowserRouter([
@@ -76,11 +76,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <EumLayout />,
     children: [
-      { 
-        path: "", 
-        element: <EumMainContainer /> 
+      {
+        path: "",
+        element: <EumMainContainer />
       },
-      { path: "exam", 
+      { path: "exam",
         element: <ExamContainer />,
         children: [
           {
@@ -171,27 +171,27 @@ const router = createBrowserRouter([
       },
       {
         path: "study",
-        element: <StudyRefactorContainer />,
+        element: <StudyContainer />,
         children: [
           {
             index: true,
-            element: <StudyRefactorComponent />
+            element: <StudyComponent />
           },
           {
             path: "experience",
-            element: <StudyRefactorExperienceContainer />,
+            element: <StudyExperienceContainer />,
             children: [
               {
                 index: true,
-                element: <StudyRefactorExperienceComponent />
+                element: <StudyExperienceComponent />
               },
               {
                 path: ":quiz",
-                element: <StudyRefactorExperienceQuizContainer />,
+                element: <StudyExperienceQuizContainer />,
                 children: [
                   {
                     path: "questions/:id",
-                    element: <StudyRefactorExperienceQuizComponent />
+                    element: <StudyExperienceQuizComponent />
                   }
                 ]
               }
@@ -199,31 +199,31 @@ const router = createBrowserRouter([
           },
           {
             path: "attendance",
-            element: <StudyRefactorAttendanceContainer />
+            element: <StudyAttendanceContainer />
           },
           {
             path: "chapter",
-            element: <StudyRefactorChapterContainer />,
+            element: <StudyChapterContainer />,
             children: [
               {
                 index: true,
-                element: <StudyRefactorChapterComponent />
+                element: <StudyChapterComponent />
               },
               {
                 path: ":quiz",
-                element: <StudyRefactorChapterQuizContainer />,
+                element: <StudyChapterQuizContainer />,
                 children: [
                   {
                     index: true,
-                    element: <StudyRefactorChapterQuizComponent />
+                    element: <StudyChapterQuizComponent />
                   },
                   {
                     path: "questions/:id",
-                    element: <StudyRefactorChapterQuizComponent />
+                    element: <StudyChapterQuizComponent />
                   },
                   {
                     path: "result",
-                    element: <StudyRefactorChapterResultContainer />
+                    element: <StudyChapterResultContainer />
                   }
                 ]
               }
@@ -231,117 +231,27 @@ const router = createBrowserRouter([
           },
           {
             path: "search",
-            element: <StudyRefactorSearchContainer />
+            element: <StudySearchContainer />
           },
           {
             path: "learn",
-            element: <StudyRefactorLearnContainer />,
+            element: <StudyLearnContainer />,
             children: [
               {
                 index: true,
-                element: <StudyRefactorLearnComponent />
+                element: <StudyLearnComponent />
               },
               {
                 path: "alphabet",
-                element: <StudyRefactorLearnAlphabetContainer />
+                element: <StudyLearnAlphabetContainer />
               },
               {
                 path: "quiz/:type",
-                element: <StudyRefactorLearnQuizContainer />,
+                element: <StudyLearnQuizContainer />,
                 children: [
                   {
                     path: "questions/:id",
-                    element: <StudyRefactorLearnQuizComponent />
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: "study-preview",
-        element: <StudyRefactorContainer />,
-        children: [
-          {
-            index: true,
-            element: <StudyRefactorComponent />
-          },
-          {
-            path: "experience",
-            element: <StudyRefactorExperienceContainer />,
-            children: [
-              {
-                index: true,
-                element: <StudyRefactorExperienceComponent />
-              },
-              {
-                path: ":quiz",
-                element: <StudyRefactorExperienceQuizContainer />,
-                children: [
-                  {
-                    path: "questions/:id",
-                    element: <StudyRefactorExperienceQuizComponent />
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            path: "attendance",
-            element: <StudyRefactorAttendanceContainer />
-          },
-          {
-            path: "chapter",
-            element: <StudyRefactorChapterContainer />,
-            children: [
-              {
-                index: true,
-                element: <StudyRefactorChapterComponent />
-              },
-              {
-                path: ":quiz",
-                element: <StudyRefactorChapterQuizContainer />,
-                children: [
-                  {
-                    index: true,
-                    element: <StudyRefactorChapterQuizComponent />
-                  },
-                  {
-                    path: "questions/:id",
-                    element: <StudyRefactorChapterQuizComponent />
-                  },
-                  {
-                    path: "result",
-                    element: <StudyRefactorChapterResultContainer />
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            path: "search",
-            element: <StudyRefactorSearchContainer />
-          },
-          {
-            path: "learn",
-            element: <StudyRefactorLearnContainer />,
-            children: [
-              {
-                index: true,
-                element: <StudyRefactorLearnComponent />
-              },
-              {
-                path: "alphabet",
-                element: <StudyRefactorLearnAlphabetContainer />
-              },
-              {
-                path: "quiz/:type",
-                element: <StudyRefactorLearnQuizContainer />,
-                children: [
-                  {
-                    path: "questions/:id",
-                    element: <StudyRefactorLearnQuizComponent />
+                    element: <StudyLearnQuizComponent />
                   }
                 ]
               }
@@ -392,7 +302,7 @@ const router = createBrowserRouter([
           {
             path: "withdraw",
             element: <MyPageWithdrawContainer />
-          }  
+          }
         ]
       },
       {
@@ -436,7 +346,7 @@ const router = createBrowserRouter([
             ]
           },
           {
-            path: "notice/write",  
+            path: "notice/write",
             element: <CustomServiceNoticeWriteContainer />
           },
           {
