@@ -535,6 +535,8 @@ const CreateChatRoomModal = () => {
   const handleCreateRoom = async (formData) => {
     const chatRoomRequestDTO = {
       chatRoomName: formData.chatRoomName,
+      chatRoomType: "그룹",
+      chatRoomProfile: thumbnailFile ? thumbnailFile.name : "default.jpg",
       chatRoomDetail: formData.chatRoomDetail,
       chatRoomLimit: isUnlimited ? 100 : Number(formData.chatRoomLimit),
     };

@@ -5,7 +5,7 @@ export const insertChatRoom = async (chatRoomRequestDTO) => {
   const response = await fetch(`${ROOT_URL}/chat-rooms`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chatRoomRequestDTO }),
+    body: JSON.stringify(chatRoomRequestDTO),
   });
   if (!response.ok) throw new Error("채팅방 생성에 실패했습니다");
   const { data } = await response.json();
