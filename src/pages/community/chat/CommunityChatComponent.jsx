@@ -7,7 +7,6 @@ import { useChatContext } from "../context/ChatContext";
 import { getChatRooms } from "../communityApi/chatApi";
 import PageCount from "../post/postComponents/PageCount";
 
-import LiveChatCardCandidate2 from "../chat/chatComponents/chatCardCandidate/LiveChatCardCandidate2.jsx";
 import LiveChatCardCandidate1 from "./chatComponents/chatCardCandidate/LiveChatCardCandidate1.jsx";
 
 const HeaderBlock = styled.div`

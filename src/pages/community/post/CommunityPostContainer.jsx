@@ -16,7 +16,6 @@ import {
 import LiveChatCardCandidate1 from "../chat/chatComponents/chatCardCandidate/LiveChatCardCandidate1.jsx";
 import { getChatRooms } from "../communityApi/chatApi.js";
 
-
 const S = {
   ColumnBlock,
   ActionBtn,
@@ -113,6 +112,8 @@ const CommunityPostContainer = () => {
         </S.PostCategoryHeader>
         {/* 포스트 카드 목록 + 페이지네이션 */}
         <PostListSection postTag={selectedTag} />
+
+        {/* 테스트 */}
       </S.ColumnBlock>
     </div>
   );

@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComment, faEye } from "@fortawesome/free-solid-svg-icons";
 import {
   Avatar,
   AvatarAndAuthorRow,
