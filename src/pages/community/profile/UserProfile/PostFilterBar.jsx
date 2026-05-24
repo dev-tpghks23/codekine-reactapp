@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import theme from "../../../../styles/theme";
 
@@ -11,8 +11,18 @@ import iconLike from "../../assets/icon/heart.svg";
 import iconSearch from "../../assets/icon/search.svg";
 
 const TYPE_LIST = [
-  { key: "post", label: "작성 게시글", icon: iconPost, iconActive: iconPostActive },
-  { key: "comment", label: "작성 댓글", icon: iconComment, iconActive: iconCommentActive },
+  {
+    key: "post",
+    label: "작성 게시글",
+    icon: iconPost,
+    iconActive: iconPostActive,
+  },
+  {
+    key: "comment",
+    label: "작성 댓글",
+    icon: iconComment,
+    iconActive: iconCommentActive,
+  },
   { key: "like", label: "좋아요한 글", icon: iconLike, iconActive: iconLike },
 ];
 
@@ -34,10 +44,12 @@ const PostFilterBar = ({
 }) => {
   const navigate = useNavigate();
   const { userId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [activeType, setActiveType] = useState("post");
-  const [activeSort, setActiveSort] = useState("latest");
   const [searchValue, setSearchValue] = useState("");
+
+  const activeSort = searchParams.get("order") ?? "latest";
 
   const handleTypeClick = (key) => {
     setActiveType(key);
@@ -45,8 +57,7 @@ const PostFilterBar = ({
   };
 
   const handleSortClick = (key) => {
-    setActiveSort(key);
-    onSortChange?.(key);
+    setSearchParams({ order: key });
   };
 
   const handleSearchChange = (e) => {
@@ -75,13 +86,17 @@ const PostFilterBar = ({
             onClick={() => handleTypeClick(key)}
           >
             <TabIconLabel>
-              <TabIcon src={activeType === key ? iconActive : icon} alt={label} />
+              <TabIcon
+                src={activeType === key ? iconActive : icon}
+                alt={label}
+              />
               <TabLabel $active={activeType === key}>{label}</TabLabel>
             </TabIconLabel>
             <CountBadge $active={activeType === key}>{counts[key]}</CountBadge>
           </TypeTab>
         ))}
         <Spacer />
+        {/* 인기순 최신순 고려 */}
         <SortGroup>
           {SORT_LIST.map(({ key, label }) => (
             <SortButton

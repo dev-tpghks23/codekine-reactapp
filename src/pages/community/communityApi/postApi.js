@@ -17,10 +17,17 @@ export const fetchPosts = async ({ page = 1, postTag = "" } = {}) => {
 };
 
 // 특정 유저가 작성한 모든 게시글 조회
-export const fetchUserPosts = async ({ page = 1, userId = 1 }) => {
+export const fetchUserPosts = async ({
+  page = 1,
+  userId = 1,
+  order = "latest",
+}) => {
   const params = new URLSearchParams({ page });
+  const orderParams = new URLSearchParams({ order });
 
-  const res = await fetch(`${ROOT_URL}/posts/user/${userId}?${params}`);
+  const res = await fetch(
+    `${ROOT_URL}/posts/user/${userId}?${params}&${orderParams}`,
+  );
   if (!res.ok) throw new Error("유저가 작성한 게시글 목록 조회 실패");
   return res.json();
 };

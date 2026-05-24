@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchUserPosts } from "../../communityApi/postApi";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { ColumnBlock } from "../../communityStyle";
 import PostListCard from "../../post/postComponents/PostListCard.jsx";
 import PageCount from "../../post/postComponents/PageCount";
@@ -12,12 +12,14 @@ const UserWritePostList = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { userId } = useParams();
+  const [searchParams] = useSearchParams();
+  const order = searchParams.get("order") ?? "latest";
 
   useEffect(() => {
     const load = async () => {
       setIsLoading(true);
       try {
-        const res = await fetchUserPosts({ page: currentPage, userId });
+        const res = await fetchUserPosts({ page: currentPage, userId, order });
         setPosts(res.data.posts);
         setTotalPages(res.data.totalPages);
       } catch (e) {
@@ -27,7 +29,7 @@ const UserWritePostList = () => {
       }
     };
     load();
-  }, [currentPage, userId]);
+  }, [currentPage, userId, order]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
