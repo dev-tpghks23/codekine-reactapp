@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./style.js";
-import theme from "../../../styles/theme";
 
 const BannerSection = React.memo(() => {
   const navigate = useNavigate();
@@ -12,7 +11,7 @@ const BannerSection = React.memo(() => {
     setTimeout(() => {
       setIsActive(false);
       navigate("/community");
-    }, 400); // $speed와 동일
+    }, 400);
   };
 
   return (
@@ -20,7 +19,7 @@ const BannerSection = React.memo(() => {
       <S.HeadlineWrapper>
         <S.HeadlineText>
           손짓 하나로 <br />
-          <span style={{ color: theme.TEXT_COLOR.primary }}>마음이 이어지는 곳</span> <br />
+          <S.PrimaryText>마음이 이어지는 곳</S.PrimaryText> <br />
           이음
         </S.HeadlineText>
       </S.HeadlineWrapper>
@@ -42,16 +41,13 @@ const BannerSection = React.memo(() => {
       </S.BlobLayer>
 
       <S.BtnChapter>
-        <div
-          className={isActive ? "active" : ""}
-          style={{ position: "relative", display: "inline-block" }}
-          >
+        <S.BtnInner className={isActive ? "active" : ""}>
           <S.LeftFrills />
           <S.StartBtn onMouseDown={handleMouseDown}>
             지금 시작하기 →
           </S.StartBtn>
           <S.RightFrills />
-        </div>
+        </S.BtnInner>
       </S.BtnChapter>
     </S.BannerWrap>
   );

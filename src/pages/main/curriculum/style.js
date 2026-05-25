@@ -72,7 +72,7 @@ export const InfoBox = styled.div`
   border-radius: 50px;
   border: solid 1px ${theme.PALETTE.primary.main};
   margin-bottom: 150px;
-  padding-top: 35px;
+  padding-top: 30px;
   padding-left: 66px;
   padding-right: 66px;
   padding-bottom: 40px;
@@ -84,6 +84,19 @@ export const InfoSubTitle = styled.span`
   font-size: ${theme.FONT_SIZE.h7};
   font-weight: ${theme.FONT_WEIGHT.medium};
   margin-bottom: 14px;
+`;
+export const InfoSub = styled.span`
+  font-size: ${theme.FONT_SIZE.h10};
+  font-weight: ${theme.FONT_WEIGHT.medium};
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap : 6px;
+`;
+
+export const ClickIcon = styled.img`
+  width: 26px;
+  height: 26px;
 `;
 
 export const InfoTitle = styled.span`
@@ -111,6 +124,11 @@ export const TagRow = styled.div`
   font-size: ${theme.FONT_SIZE.h10};
   font-weight: ${theme.FONT_WEIGHT.medium};
   color: ${theme.GRAYSCALE[7]};
+`;
+
+export const InfoHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const BtnRow = styled.div`

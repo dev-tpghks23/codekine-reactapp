@@ -287,3 +287,12 @@ export const RightFrills = styled.div`
     100% { width: 8px; top: 69px; }
   }
 `;
+
+export const BtnInner = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+export const PrimaryText = styled.span`
+  color: ${theme.TEXT_COLOR.primary};
+`;
