@@ -6,11 +6,6 @@ const ROOT_URL = "http://localhost:10000/api";
 export const fetchPosts = async ({ page = 1, postTag = "" } = {}) => {
   const params = new URLSearchParams({ page });
   if (postTag) params.append("postTag", postTag);
-
-  // 루트 url 정의하기
-  // http://localhost:10000/api/posts?page=1
-  // const rootUrl = "http://localhost:10000/api";
-
   const res = await fetch(`${ROOT_URL}/posts?${params}`);
   if (!res.ok) throw new Error("게시글 목록 조회 실패");
   return res.json();
@@ -39,22 +34,20 @@ export const fetchUserLikedPosts = async ({
   page = 1,
   userId = 1,
   order = "latest",
+  keyword = "",
 }) => {
   const params = new URLSearchParams({ page });
   const orderParams = new URLSearchParams({ order });
+  const searchParams = new URLSearchParams({ keyword });
 
   const res = await fetch(
-    `${ROOT_URL}/posts/user/${userId}/likes?${params}&${orderParams}`,
+    `${ROOT_URL}/posts/user/${userId}/likes?${params}&${orderParams}&${searchParams}`,
   );
   if (!res.ok) throw new Error("유저 좋아요 게시글 목록 조회 실패");
   return res.json();
 };
 
-// 특정 게시글 불러오기
-// curl -X 'GET' \
-//   'http://localhost:10000/api/posts/1' \
-//   -H 'accept: */*'
-
+// 특정 게시글 로드
 export const getPostById = async (id) => {
   const res = await fetch(`${ROOT_URL}/posts/${id}`);
   if (!res.ok) throw new Error("게시글 로딩 실패");

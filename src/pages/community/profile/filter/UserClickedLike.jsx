@@ -15,6 +15,11 @@ const UserClickedLike = () => {
   const { userId } = useParams();
   const [searchParams] = useSearchParams();
   const order = searchParams.get("order") ?? "latest";
+  const keyword = searchParams.get("keyword") ?? "";
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [keyword]);
 
   useEffect(() => {
     const load = async () => {
@@ -24,6 +29,7 @@ const UserClickedLike = () => {
           page: currentPage,
           userId,
           order,
+          keyword,
         });
         setPosts(res.data.posts);
         setTotalPages(res.data.totalPages);
@@ -34,7 +40,7 @@ const UserClickedLike = () => {
       }
     };
     load();
-  }, [currentPage, userId, order]);
+  }, [currentPage, userId, order, keyword]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
