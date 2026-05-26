@@ -7,6 +7,7 @@ import { ColumnBlock, CategoryPill, ActionBtn } from "../../communityStyle";
 import PostListCardSkeleton from "../skeleton/PostListCardSkeleton.jsx";
 import { POST_CATEGORIES } from "../../constants";
 import T from "../../communityTextStyle";
+import NoResult from "../../common/NoResult.jsx";
 import {
   PostHeader,
   PostCategoryHeader,
@@ -88,15 +89,21 @@ const PostListSection = () => {
         </S.ColumnBlock>
       ) : (
         <S.ColumnBlock marginBottom="42px">
-          {posts.map(({ id, ...posts }) => (
-            <PostListCard key={id} id={id} {...posts} />
-          ))}
-          {totalPages > 1 && (
-            <PageCount
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
+          {posts.length === 0 ? (
+            <NoResult />
+          ) : (
+            <>
+              {posts.map(({ id, ...posts }) => (
+                <PostListCard key={id} id={id} {...posts} />
+              ))}
+              {totalPages > 1 && (
+                <PageCount
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </>
           )}
         </S.ColumnBlock>
       )}
