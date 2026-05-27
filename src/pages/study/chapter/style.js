@@ -534,7 +534,7 @@ export const WrongAnswerReview = styled.div`
 export const BadgeModalOverlay = styled.div`
   position: fixed;
   inset: 0;
-  z-index: 900;
+  /* z-index: 900; */
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -545,7 +545,6 @@ export const BadgeModalOverlay = styled.div`
 export const FireworkCanvas = styled.canvas`
   position: fixed;
   inset: 0;
-  z-index: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
