@@ -1,20 +1,37 @@
-// 학습로드맵항목: 챕터별 학습 단계 카드
+// 학습 로드맵 항목: 단계 선택 후 말풍선에서 학습 시작
 import * as S from "../style";
 
-const LearnRoadmapItem = ({ lesson, onStart }) => {
+const LearnRoadmapItem = ({ lesson, index, selected, onSelect, onStart }) => {
+  const isLocked = lesson.status === "locked";
+  const isReward = lesson.status === "reward";
+  const canStart = !isLocked;
+  const startLabel = isLocked ? "잠금" : isReward ? "보상 확인" : "시작 +10 XP";
+
+  // 단계 선택: 바로 이동하지 않고 시작 말풍선만 표시
+  const handleSelect = () => {
+    onSelect?.(lesson);
+  };
+
+  // 학습 시작: 선택된 말풍선 안 버튼에서만 실제 이동
+  const handleStart = () => {
+    onStart?.(lesson);
+  };
 
   return (
-    <S.RoadmapItem $status={lesson.status}>
-      <S.StepBadge $status={lesson.status}>{lesson.badge}</S.StepBadge>
-      <S.LessonCard $status={lesson.status}>
-        <S.LessonText>
-          <S.LessonTitle $status={lesson.status}>{lesson.title}</S.LessonTitle>
-          <S.LessonDesc>{lesson.desc}</S.LessonDesc>
-        </S.LessonText>
-        <S.LessonButton type="button" $status={lesson.status} onClick={() => onStart?.(lesson)}>
-          {lesson.buttonText}
-        </S.LessonButton>
-      </S.LessonCard>
+    <S.RoadmapItem $status={lesson.status} $index={index} $selected={selected}>
+      <S.StepButton type="button" $status={lesson.status} $selected={selected} onClick={handleSelect} aria-label={`${lesson.title} 선택`}>
+        <S.StepBadge $status={lesson.status}>{lesson.badge}</S.StepBadge>
+      </S.StepButton>
+
+      {selected && (
+        <S.LessonPopover $status={lesson.status} $index={index}>
+          <S.LessonPopoverTitle>{lesson.title}</S.LessonPopoverTitle>
+          <S.LessonPopoverDesc>{isLocked ? "앞 단계를 완료하면 열려요" : lesson.desc}</S.LessonPopoverDesc>
+          <S.LessonStartButton type="button" disabled={!canStart} onClick={handleStart}>
+            {startLabel}
+          </S.LessonStartButton>
+        </S.LessonPopover>
+      )}
     </S.RoadmapItem>
   );
 };

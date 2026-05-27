@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
-const statusColor = {
-  done: "#22c55e",
-  active: "#4359fc",
-  reward: "#f59e0b",
-  locked: "#d7dbe4",
-};
+const blink = `
+  0%, 92%, 100% {
+    transform: scaleY(1);
+  }
+
+  94%, 96% {
+    transform: scaleY(0.12);
+  }
+`;
 
 export const LearnWrap = styled.section`
   position: relative;
@@ -25,14 +28,14 @@ export const LearnWrap = styled.section`
 
 export const LearnLayout = styled.div`
   display: grid;
-  grid-template-columns: 156px minmax(0, 760px) 310px;
-  gap: 42px;
+  grid-template-columns: 180px minmax(0, 720px) 330px;
+  gap: 45px;
   align-items: start;
-  width: min(1268px, 100%);
+  width: min(1320px, 100%);
   margin: 0 auto;
 
   > aside {
-    width: 310px;
+    width: 330px;
     padding: 22px;
   }
 
@@ -42,7 +45,7 @@ export const LearnLayout = styled.div`
   }
 
   @media (max-width: 1100px) {
-    grid-template-columns: 130px minmax(0, 1fr);
+    grid-template-columns: 150px minmax(0, 1fr);
   }
 
   @media (max-width: 760px) {
@@ -52,8 +55,8 @@ export const LearnLayout = styled.div`
 
 export const SideMenu = styled.nav`
   display: grid;
-  gap: 8px;
-  padding: 4px 0;
+  gap: 12px;
+  padding: 8px 0;
   border-right: 1px solid #f0f2f7;
 
   @media (max-width: 760px) {
@@ -67,23 +70,23 @@ export const SideMenu = styled.nav`
 export const SideButton = styled.button`
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: 122px;
-  height: 38px;
-  padding: 0 15px;
+  gap: 12px;
+  width: 150px;
+  height: 46px;
+  padding: 0 18px;
   border: 0;
   border-radius: 8px;
   background: ${({ $active }) => ($active ? "#eef1ff" : "transparent")};
   color: ${({ $active }) => ($active ? "#4359fc" : "#777")};
-  font-size: 15px;
+  font-size: 16px;
   font-weight: ${({ $active }) => ($active ? 900 : 700)};
   cursor: pointer;
 
   span {
     display: inline-flex;
     justify-content: center;
-    width: 18px;
-    font-size: 14px;
+    width: 20px;
+    font-size: 16px;
   }
 
   &:hover {
@@ -134,7 +137,7 @@ export const GuideButton = styled.button`
 export const ChapterPanel = styled.article`
   overflow: hidden;
   border-radius: 8px;
-  background: #fff;
+  background: linear-gradient(180deg, #f8f9ff 0%, #ffffff 62%);
   box-shadow: 0 0 0 1px #edf0f7 inset;
 `;
 
@@ -175,51 +178,328 @@ export const StatusText = styled.p`
   font-weight: 700;
 `;
 
-export const RoadmapList = styled.div`
-  display: grid;
-  gap: 18px;
-  padding: 64px 76px 38px;
+export const RoadmapStage = styled.div`
   position: relative;
+  min-height: 790px;
+  padding: 26px 0 118px;
+  overflow: hidden;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 82px;
-    bottom: 54px;
-    left: 99px;
-    width: 3px;
-    background: #e5e9f4;
+  @media (max-width: 760px) {
+    min-height: 660px;
+    padding: 30px 18px 20px;
+  }
+`;
+
+export const RoadmapPath = styled.svg`
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  z-index: 1;
+  width: 592px;
+  height: 680px;
+  overflow: visible;
+  pointer-events: none;
+  transform: translateX(-50%);
+
+  path {
+    fill: none;
+    stroke: #dfe4ff;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   @media (max-width: 760px) {
-    padding: 34px 20px 28px;
+    width: 520px;
+  }
+`;
 
-    &::before {
-      left: 40px;
+export const RoadmapList = styled.div`
+  width: min(592px, 100%);
+  min-height: 770px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+
+  &::before {
+    content: none;
+  }
+
+  &::after {
+    content: none;
+  }
+
+  @media (max-width: 760px) {
+    margin: 0 auto;
+  }
+`;
+
+export const RoadmapMascot = styled.div`
+  position: absolute;
+  right: 90px;
+  top: 270px;
+  width: 114px;
+  height: 126px;
+  border-radius: 54% 54% 45% 45%;
+  background: #4359fc;
+  box-shadow: 0 18px 34px rgba(67, 89, 252, 0.16);
+  transform: rotate(-2deg) scale(0.7);
+  transform-origin: center;
+
+  .eye {
+    position: absolute;
+    top: 36px;
+    width: 28px;
+    height: 34px;
+    border-radius: 50%;
+    background: #fff;
+    animation: mascotBlink 4.2s ease-in-out infinite;
+    transform-origin: center;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 9px;
+      top: 11px;
+      width: 11px;
+      height: 14px;
+      border-radius: 50%;
+      background: #27315f;
     }
+  }
+
+  .eye.left {
+    left: 28px;
+  }
+
+  .eye.right {
+    right: 26px;
+  }
+
+  @keyframes mascotBlink {
+    ${blink}
+  }
+
+  .smile {
+    position: absolute;
+    left: 42px;
+    top: 72px;
+    width: 32px;
+    height: 18px;
+    border-bottom: 7px solid #ffd35c;
+    border-radius: 0 0 26px 26px;
+  }
+
+  .arm {
+    position: absolute;
+    top: 90px;
+    width: 18px;
+    height: 56px;
+    border-radius: 999px;
+    background: #4359fc;
+  }
+
+  .arm.left {
+    left: -14px;
+    transform: rotate(45deg);
+  }
+
+  .arm.right {
+    right: -13px;
+    transform: rotate(-42deg);
+  }
+
+  .foot {
+    position: absolute;
+    bottom: -18px;
+    width: 14px;
+    height: 42px;
+    border-radius: 999px;
+    background: #ff9f1c;
+  }
+
+  .foot.left {
+    left: 40px;
+    transform: rotate(16deg);
+  }
+
+  .foot.right {
+    right: 31px;
+    transform: rotate(-15deg);
+  }
+
+  @media (max-width: 760px) {
+    right: 24px;
+    top: 392px;
+    transform: scale(0.62);
   }
 `;
 
 export const RoadmapItem = styled.article`
+  position: absolute;
+  left: ${({ $index }) => {
+    const positions = ["260px", "332px", "296px", "260px", "332px"];
+    return positions[$index] || "296px";
+  }};
+  top: ${({ $index }) => {
+    const positions = ["58px", "166px", "296px", "452px", "564px"];
+    return positions[$index] || `${58 + $index * 120}px`;
+  }};
+  z-index: ${({ $selected }) => ($selected ? 20 : 3)};
   display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 18px;
-  align-items: center;
+  justify-items: center;
+  width: 132px;
+  min-height: 82px;
+  transform: translateX(-50%);
+`;
+
+export const StartLabel = styled.span`
+  position: absolute;
+  left: 50%;
+  top: -48px;
+  z-index: 4;
+  min-width: 94px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  margin-bottom: -2px;
+  border: 2px solid #c9d1ff;
+  border-radius: 15px;
+  background: #fff;
+  color: #4359fc;
+  font-size: 17px;
+  font-weight: 900;
+  box-shadow: 0 10px 24px rgba(67, 89, 252, 0.12);
+  transform: translateX(-50%);
+`;
+
+export const StepButton = styled.button`
   position: relative;
-  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: ${({ $selected }) => ($selected ? "108px" : "88px")};
+  height: ${({ $selected }) => ($selected ? "108px" : "88px")};
+  border: 0;
+  border-radius: 50%;
+  background: ${({ $status, $selected }) =>
+    $status === "done" || $status === "active" || $status === "reward" ? "rgba(67, 89, 252, 0.12)" : $selected ? "#eef1ff" : "#f2f2f2"};
+  cursor: pointer;
+  box-shadow: ${({ $status, $selected }) =>
+    $status === "done" || $status === "active" || $status === "reward"
+      ? "0 0 0 12px rgba(67, 89, 252, 0.1)"
+      : $selected
+      ? "0 0 0 10px rgba(67, 89, 252, 0.08)"
+      : "none"};
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 `;
 
 export const StepBadge = styled.span`
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 78px;
+  height: 70px;
   border-radius: 50%;
-  background: ${({ $status }) => statusColor[$status] || "#edf0f5"};
-  color: ${({ $status }) => ($status === "locked" ? "#aaa" : "#fff")};
-  font-size: ${({ $status }) => ($status === "active" ? "20px" : "17px")};
+  background: ${({ $status }) => ($status === "done" || $status === "active" || $status === "reward" ? "#4359fc" : "#e5e5e5")};
+  color: ${({ $status }) => ($status === "done" || $status === "active" || $status === "reward" ? "#fff" : "#afafaf")};
+  font-size: 34px;
   font-weight: 900;
-  box-shadow: ${({ $status }) => ($status === "active" ? "0 8px 18px rgba(67, 89, 252, 0.2)" : "none")};
+  line-height: 1;
+  box-shadow: ${({ $status }) =>
+    $status === "done" || $status === "active" || $status === "reward"
+      ? "0 8px 0 #3045de, 0 8px 0 rgba(0, 0, 0, 0.16)"
+      : "0 8px 0 #cfcfcf, 0 8px 0 rgba(0, 0, 0, 0.14)"};
+`;
+
+export const LessonBubble = styled.div`
+  position: absolute;
+  left: 112px;
+  top: 16px;
+  z-index: 5;
+  width: 178px;
+  min-height: 60px;
+  display: ${({ $status }) => ($status === "active" ? "grid" : "none")};
+  align-content: center;
+  gap: 5px;
+  padding: 10px 14px;
+  border: 1px solid #dfe5ff;
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 10px 24px rgba(67, 89, 252, 0.08);
+`;
+
+export const LessonPopover = styled.aside`
+  position: absolute;
+  left: 50%;
+  top: 108px;
+  z-index: 30;
+  display: grid;
+  gap: 8px;
+  width: 205px;
+  min-height: 102px;
+  padding: 12px;
+  border-radius: 12px;
+  background: ${({ $status }) => ($status === "locked" ? "#f2f2f2" : "#4359fc")};
+  color: ${({ $status }) => ($status === "locked" ? "#777" : "#fff")};
+  box-shadow: 0 10px 22px rgba(30, 48, 86, 0.12);
+  transform: translateX(-50%);
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -7px;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    background: inherit;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  @media (max-width: 760px) {
+    width: 205px;
+  }
+`;
+
+export const LessonPopoverTitle = styled.strong`
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.35;
+`;
+
+export const LessonPopoverDesc = styled.p`
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.4;
+  opacity: 0.92;
+`;
+
+export const LessonStartButton = styled.button`
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 34px;
+  margin-top: 2px;
+  border: 0;
+  border-radius: 10px;
+  background: ${({ disabled }) => (disabled ? "#fff" : "#fff")};
+  color: ${({ disabled }) => (disabled ? "#aaa" : "#4359fc")};
+  font-size: 12px;
+  font-weight: 900;
+  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
 `;
 
 export const LessonCard = styled.div`

@@ -344,6 +344,7 @@ export const CalendarFrame = styled.div`
 
   .react-calendar__tile--now abbr {
     position: relative;
+    /* 원형위로뜨는숫자 */
     z-index: 2;
     color: #fff;
   }
@@ -622,7 +623,7 @@ export const RewardDay = styled.div`
 export const AttendancePopupWrap = styled.div`
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  /* z-index: 1000; */
   display: flex;
   align-items: center;
   justify-content: center;
