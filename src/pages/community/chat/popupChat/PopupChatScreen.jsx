@@ -62,6 +62,7 @@ const PopupChatScreen = () => {
       .catch((err) => console.error("유저 목록 불러오기 실패:", err));
   }, [chatRoomId]);
 
+  // 유저 선택, 선택 해제 로직
   const handleUserClick = (user) => {
     setSelectedUser((prev) => (prev?.email === user.email ? null : user));
   };
@@ -80,6 +81,8 @@ const PopupChatScreen = () => {
           />
           {/* 채팅 메세지 나열되는 곳 */}
           <PopupChatCenter chatRoomId={chatRoomId} key={chatRoomId} />
+
+          {/* 오른쪽 정보 판넬 */}
           <S.RightPanel>
             {selectedUser ? (
               <PopupUserInfoPanel
@@ -87,7 +90,7 @@ const PopupChatScreen = () => {
                 onClose={() => setSelectedUser(null)}
               />
             ) : (
-              <PopupRoomInfoPanel chatRoomInfo={chatRoomInfo} tags={TAGS} />
+              <PopupRoomInfoPanel tags={TAGS} {...chatRoomInfo} />
             )}
           </S.RightPanel>
         </S.Body>
