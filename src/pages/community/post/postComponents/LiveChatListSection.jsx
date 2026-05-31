@@ -92,7 +92,7 @@ const LiveChatListSection = () => {
             <LiveChatCardCandidate1Skeleton />
             <LiveChatCardCandidate1Skeleton />
           </>
-        ) : (
+        ) : rooms.length ? (
           rooms.map(({ id, ...roomData }) => (
             <LiveChatCardCandidate1
               key={id}
@@ -100,6 +100,11 @@ const LiveChatListSection = () => {
               onJoin={() => openChatRoom({ id, ...roomData })}
             />
           ))
+        ) : (
+          <NoResult
+            message="실시간 채팅방이 없습니다"
+            subMessage="새로운 채팅방을 만들어서 유저들과 소통해 보세요"
+          />
         )}
       </LiveChatRow>
       <AllChatButton>
