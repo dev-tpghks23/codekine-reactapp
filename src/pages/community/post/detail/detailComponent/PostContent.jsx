@@ -1,6 +1,7 @@
 import theme from "../../../../../styles/theme";
 import { useState, useEffect } from "react";
-import { getPostById } from "../../../communityApi/postApi";
+import { useNavigate, useLocation } from "react-router-dom";
+import { getPostById, deletePost } from "../../../communityApi/postApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import * as S from "../postDetailStyle";
@@ -14,10 +15,24 @@ import PostAlertPopup from "../../postComponents/PostAlertPopup";
 const { PALETTE } = theme;
 
 const PostContent = ({ postId }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from ?? "/community";
+
   const [post, setPost] = useState(null);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [deletePopupOpen, setDeletePopupOpen] = useState(false);
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await deletePost(postId);
+      setDeletePopupOpen(false);
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.error("게시글 삭제 실패:", err);
+    }
+  };
 
   useEffect(() => {
     if (!postId) return;
@@ -166,10 +181,7 @@ const PostContent = ({ postId }) => {
       <PostAlertPopup
         isOpen={deletePopupOpen}
         onClose={() => setDeletePopupOpen(false)}
-        onConfirm={() => {
-          // TODO: 게시글 삭제 API 연동
-          setDeletePopupOpen(false);
-        }}
+        onConfirm={handleDeleteConfirm}
       />
     </div>
   );
