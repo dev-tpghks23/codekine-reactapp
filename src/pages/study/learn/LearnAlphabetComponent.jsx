@@ -2,7 +2,10 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { alphabetMenus, alphabetQuests, alphabetSections, getAlphabetInfo } from "./data/alphabetMock";
+import { useTodayQuests } from "../hooks/useTodayQuests";
 import LearnAlphabetPopup from "./parts/LearnAlphabetPopup";
+import LearnQuestPanel from "./parts/LearnQuestPanel";
+import LearnSideMenu from "./parts/LearnSideMenu";
 import LetterCard from "./parts/LetterCard";
 import * as S from "./style";
 
@@ -11,6 +14,7 @@ const SERVICE_READY_MESSAGE = "서비스 준비중입니다.";
 const LearnAlphabetComponent = () => {
   const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const quests = useTodayQuests(alphabetQuests);
 
   // 전체글자목록: 팝업에서 이전/다음 이동할 때 사용합니다.
   const letters = useMemo(() => alphabetSections.flatMap((section) => section.letters), []);
@@ -45,14 +49,7 @@ const LearnAlphabetComponent = () => {
   return (
     <S.AlphaWrap>
       <S.AlphaLayout>
-        <S.SideMenu aria-label="학습 메뉴">
-          {alphabetMenus.map((menu) => (
-            <S.SideButton key={menu.id} type="button" $active={menu.active} onClick={() => handleMenu(menu)}>
-              <span>{menu.icon}</span>
-              {menu.label}
-            </S.SideButton>
-          ))}
-        </S.SideMenu>
+        <LearnSideMenu menus={alphabetMenus} onMenu={handleMenu} />
 
         <S.AlphaMain>
           <S.AlphaHeader>
@@ -75,30 +72,7 @@ const LearnAlphabetComponent = () => {
           ))}
         </S.AlphaMain>
 
-        <S.AlphaQuestPanel>
-          <S.QuestTitle>오늘의 퀘스트</S.QuestTitle>
-          {alphabetQuests.map((quest) => {
-            const progress = Math.min((quest.current / quest.total) * 100, 100);
-
-            return (
-              <S.QuestItem key={quest.id}>
-                <S.QuestIcon>{quest.icon}</S.QuestIcon>
-                <S.QuestInfo>
-                  <S.QuestName>{quest.title}</S.QuestName>
-                  <S.QuestBar $progress={progress} aria-label={`${quest.title} 진행률`}>
-                    <span />
-                  </S.QuestBar>
-                </S.QuestInfo>
-                <S.QuestMeta>
-                  <S.QuestCount>
-                    {quest.current} / {quest.total}
-                  </S.QuestCount>
-                  <S.QuestReward>{quest.reward}</S.QuestReward>
-                </S.QuestMeta>
-              </S.QuestItem>
-            );
-          })}
-        </S.AlphaQuestPanel>
+        <LearnQuestPanel quests={quests} />
       </S.AlphaLayout>
 
       {selectedLetter && (

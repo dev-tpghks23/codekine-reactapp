@@ -219,7 +219,7 @@ export const ResultThumbWrap = styled.div`
   place-items: center;
   overflow: hidden;
   border-radius: 12px;
-  background: #eef1ff;
+  background: transparent;
   color: #a3a7b3;
   font-size: 11px;
   text-align: center;
@@ -233,7 +233,7 @@ export const ResultThumbWrap = styled.div`
 export const ResultThumb = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 export const ResultText = styled.div`
@@ -370,7 +370,7 @@ export const DetailMediaWrap = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  min-height: 520px;
+  min-height: 0;
   padding: 0;
   border: 1px solid #e5e8f2;
   border-radius: 18px;
@@ -378,8 +378,7 @@ export const DetailMediaWrap = styled.div`
   box-shadow: 0 18px 42px rgba(41, 48, 88, 0.08);
 
   @media (max-width: 768px) {
-    min-height: 320px;
-    padding: 20px;
+    min-height: 0;
   }
 `;
 
@@ -394,8 +393,9 @@ export const DetailImage = styled.img`
 
 export const DetailVideo = styled.video`
   width: 100%;
-  height: 100%;
-  min-height: 520px;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 700 / 466;
   border-radius: 18px;
   background: #f7f8ff;
   object-fit: contain;
@@ -444,14 +444,6 @@ export const DetailTitle = styled.h2`
   @media (max-width: 768px) {
     font-size: 16px;
   }
-`;
-
-export const DetailMeaning = styled.p`
-  display: inline;
-  margin: 0;
-  color: #666;
-  font-size: 14px;
-  font-weight: 400;
 `;
 
 export const DetailDesc = styled.p`
@@ -553,49 +545,6 @@ export const StepTitle = styled.h3`
   }
 `;
 
-export const MotionList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 12px;
-`;
-
-export const MotionItem = styled.div`
-  min-height: 82px;
-  display: grid;
-  place-items: center;
-  gap: 5px;
-  padding: 10px;
-  border: 1px dashed #d7dae8;
-  border-radius: 8px;
-  background: #fff;
-
-  strong {
-    font-size: 32px;
-    line-height: 1;
-  }
-
-  span {
-    color: #1a1a1a;
-    font-size: 12px;
-    font-weight: 300;
-  }
-`;
-
-export const VideoSourceLink = styled.a`
-  height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 18px;
-  border-radius: 999px;
-  background: #4359fc;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  text-decoration: none;
-`;
-
 export const MeaningBox = styled.div`
   margin-bottom: 18px;
   padding: 12px 18px;
@@ -608,39 +557,6 @@ export const DetailCategoryText = styled.p`
   color: #666;
   font-size: 12px;
   line-height: 20px;
-`;
-
-export const TagList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-`;
-
-export const TagItem = styled.span`
-  display: inline-flex;
-  align-items: center;
-  min-height: 30px;
-  padding: 0 12px;
-  border-radius: 999px;
-  background: #f1f3f8;
-  color: #626876;
-  font-size: 13px;
-  font-weight: 800;
-`;
-
-export const DetailStartButton = styled.button`
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 34px auto 0;
-  border: 0;
-  background: transparent;
-  color: #1a1a1a;
-  font-size: 20px;
-  font-weight: 800;
-  cursor: pointer;
 `;
 
 export const EmptyBox = styled.div`

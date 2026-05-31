@@ -16,7 +16,7 @@ export const LearnWrap = styled.section`
   isolation: isolate;
   width: 100%;
   min-height: 100vh;
-  padding: 142px 24px 120px;
+  padding: 112px 24px 120px;
   background: #fff;
   color: #2c2c2a;
   font-family: Pretendard, sans-serif;
@@ -180,8 +180,8 @@ export const StatusText = styled.p`
 
 export const RoadmapStage = styled.div`
   position: relative;
-  min-height: 790px;
-  padding: 26px 0 118px;
+  min-height: 720px;
+  padding: 26px 0 30px;
   overflow: hidden;
 
   @media (max-width: 760px) {
@@ -216,7 +216,7 @@ export const RoadmapPath = styled.svg`
 
 export const RoadmapList = styled.div`
   width: min(592px, 100%);
-  min-height: 770px;
+  min-height: 680px;
   margin: 0 auto;
   position: relative;
   z-index: 2;
@@ -618,7 +618,7 @@ export const QuestTitle = styled.h2`
 
 export const QuestItem = styled.div`
   display: grid;
-  grid-template-columns: 34px 1fr 32px;
+  grid-template-columns: 34px minmax(0, 1fr) 38px;
   gap: 10px;
   align-items: center;
   min-height: 52px;
@@ -689,6 +689,7 @@ export const QuestCount = styled.p`
   font-size: 11px;
   font-weight: 800;
   text-align: right;
+  white-space: nowrap;
 `;
 
 export const ProgressArea = styled.div`
@@ -698,11 +699,9 @@ export const ProgressArea = styled.div`
   gap: 24px;
   width: min(1268px, 100%);
   margin: 46px auto 0;
-  padding-left: 156px;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
-    padding-left: 0;
   }
 `;
 
@@ -788,7 +787,7 @@ export const ExpIcon = styled.span`
 export const AlphaWrap = styled.section`
   width: 100%;
   min-height: 100vh;
-  padding: 142px 24px 120px;
+  padding: 112px 24px 120px;
   background: #fff;
   color: #2c2c2a;
   font-family: Pretendard, sans-serif;
@@ -798,32 +797,7 @@ export const AlphaWrap = styled.section`
   }
 `;
 
-export const AlphaLayout = styled.div`
-  display: grid;
-  grid-template-columns: 156px minmax(0, 760px) 310px;
-  gap: 42px;
-  align-items: start;
-  width: min(1268px, 100%);
-  margin: 0 auto;
-
-  ${SideButton} {
-    width: 122px;
-    height: 38px;
-    font-size: 15px;
-
-    span {
-      font-size: 14px;
-    }
-  }
-
-  @media (max-width: 1100px) {
-    grid-template-columns: 130px minmax(0, 1fr);
-  }
-
-  @media (max-width: 760px) {
-    grid-template-columns: 1fr;
-  }
-`;
+export const AlphaLayout = styled(LearnLayout)``;
 
 export const AlphaMain = styled.main`
   min-width: 0;
@@ -931,30 +905,6 @@ export const AlphaLetterCard = styled.button`
     span {
       background: #4359fc;
     }
-  }
-`;
-
-export const AlphaQuestPanel = styled(QuestPanel)`
-  margin-top: 0;
-  width: 310px;
-
-  ${QuestTitle} {
-    font-size: 17px;
-    margin-bottom: 18px;
-  }
-
-  ${QuestItem} {
-    min-height: 60px;
-  }
-
-  ${QuestIcon} {
-    width: 34px;
-    height: 34px;
-    font-size: 16px;
-  }
-
-  ${QuestName} {
-    font-size: 13px;
   }
 `;
 
@@ -1091,7 +1041,7 @@ export const AlphaPopupActions = styled.div`
 export const LearnQuizWrap = styled.section`
   width: 100%;
   min-height: 100vh;
-  padding: 160px 24px 96px;
+  padding: 42px 24px 72px;
   background: #fff;
   color: #2c2c2a;
   font-family: Pretendard, sans-serif;
@@ -1153,7 +1103,7 @@ export const LearnQuizCount = styled.strong`
 
 export const LearnSessionIntro = styled.section`
   width: min(880px, 100%);
-  margin: 46px auto 0;
+  margin: 0 auto 30px;
 `;
 
 export const SessionStatus = styled.p`
@@ -1167,55 +1117,23 @@ export const SessionStatus = styled.p`
 `;
 
 export const SessionVideoCard = styled.article`
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 20px;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 18px;
-  border: 1px solid #e1e5ef;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 10px 26px rgba(44, 52, 92, 0.06);
-
-  span {
-    display: block;
-    margin-bottom: 8px;
-    color: #4359fc;
-    font-size: 13px;
-    font-weight: 900;
-  }
-
-  strong {
-    display: block;
-    color: #1f2430;
-    font-size: 20px;
-    font-weight: 900;
-    line-height: 1.35;
-  }
-
-  p {
-    margin: 10px 0 0;
-    color: #777f8e;
-    font-size: 14px;
-    line-height: 1.55;
-  }
 
   video {
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    border-radius: 10px;
-    background: #eef1ff;
-    object-fit: cover;
-  }
-
-  @media (max-width: 760px) {
-    grid-template-columns: 1fr;
+    width: min(520px, 100%);
+    height: auto;
+    aspect-ratio: 700 / 466;
+    border-radius: 12px;
+    background: transparent;
+    object-fit: contain;
   }
 `;
 
 export const LearnQuizHeader = styled.header`
   width: min(1120px, 100%);
-  margin: 46px auto 38px;
+  margin: 32px auto 22px;
   text-align: left;
 `;
 
@@ -1258,11 +1176,11 @@ export const LearnQuizTarget = styled.div`
 
 export const LearnQuizOptionGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 240px);
-  justify-content: space-between;
-  gap: 60px;
+  grid-template-columns: repeat(3, 260px);
+  justify-content: center;
+  gap: 36px;
   width: min(880px, 100%);
-  margin: 0 auto 56px;
+  margin: 0 auto 38px;
 
   @media (max-width: 860px) {
     grid-template-columns: 1fr;
@@ -1311,12 +1229,17 @@ const optionTone = {
 export const LearnQuizOptionIcon = styled.div`
   display: grid;
   place-items: center;
-  height: 116px;
-  margin-bottom: 24px;
+  height: ${({ $wordOnly }) => ($wordOnly ? "100%" : "116px")};
+  margin-bottom: ${({ $wordOnly }) => ($wordOnly ? "0" : "24px")};
+  padding: ${({ $wordOnly }) => ($wordOnly ? "14px 10px" : "0")};
   border: 1px dashed #cbd5ff;
   border-radius: 10px;
   background: #f1f3ff;
-  font-size: 48px;
+  font-size: ${({ $wordOnly }) => ($wordOnly ? "32px" : "48px")};
+  font-weight: ${({ $wordOnly }) => ($wordOnly ? "700" : "400")};
+  line-height: 1.25;
+  text-align: center;
+  word-break: keep-all;
 `;
 
 export const LearnQuizOptionText = styled.div`
@@ -1352,10 +1275,10 @@ export const LearnQuizOptionNumber = styled.span`
 
 export const LearnQuizOption = styled.button`
   position: relative;
-  width: 240px;
-  height: 210px;
+  width: 260px;
+  height: ${({ $wordOnly }) => ($wordOnly ? "154px" : "210px")};
   overflow: hidden;
-  padding: 20px 24px 22px;
+  padding: ${({ $wordOnly }) => ($wordOnly ? "16px 18px" : "20px 24px 22px")};
   border: 2px solid ${({ $state }) => optionTone[$state]?.border};
   border-radius: 14px;
   background: ${({ $state }) => optionTone[$state]?.bg};
@@ -1438,7 +1361,7 @@ export const LearnQuizFeedback = styled.div`
   align-items: center;
   width: min(1320px, 100%);
   min-height: 160px;
-  margin: 72px auto 0;
+  margin: 38px auto 0;
   padding: 34px 56px;
   border-radius: 0;
   background: ${({ $status }) => ($status === "correct" ? "#d9ffc6" : "#ffe8e8")};
@@ -1473,6 +1396,24 @@ export const LearnQuizFeedbackText = styled.div`
     color: #555b68;
     font-size: 15px;
     line-height: 1.55;
+  }
+
+  .descriptionWrap {
+    margin-top: 16px;
+  }
+
+  .descriptionLabel {
+    display: block;
+    margin-bottom: 6px;
+    color: #f14141;
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .description {
+    margin-bottom: 0;
+    color: #777f8e;
+    font-size: 14px;
   }
 
   span {
@@ -1512,22 +1453,22 @@ export const LearnReviewCard = styled.article`
 `;
 
 export const LearnReviewLabel = styled.p`
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   color: #ce82ff;
-  font-size: 15px;
+  font-size: 23px;
   font-weight: 900;
 `;
 
 export const LearnReviewIntro = styled.header`
-  width: min(900px, 100%);
-  margin: 44px auto 22px;
+  width: min(1035px, 100%);
+  margin: 50px auto 25px;
   text-align: left;
 `;
 
 export const LearnReviewTitle = styled.h1`
-  margin: 0 0 14px;
+  margin: 0 0 16px;
   color: #3c3c3c;
-  font-size: 30px;
+  font-size: 35px;
   font-weight: 900;
   line-height: 1.35;
 `;
@@ -1535,19 +1476,19 @@ export const LearnReviewTitle = styled.h1`
 export const LearnReviewDesc = styled.p`
   margin: 0;
   color: #888;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.55;
 `;
 
 export const LearnReviewContent = styled.section`
   position: relative;
   display: grid;
-  grid-template-columns: minmax(320px, 430px) minmax(220px, 1fr);
-  gap: 46px;
-  width: min(800px, 100%);
-  min-height: 430px;
-  margin: 0 auto 24px;
-  padding: 26px 40px 76px;
+  grid-template-columns: minmax(368px, 495px) minmax(253px, 1fr);
+  gap: 53px;
+  width: min(920px, 100%);
+  min-height: 407px;
+  margin: 0 auto 85px;
+  padding: 30px 46px;
   border: 1px solid #d8d8d8;
   border-radius: 18px;
   background: #fff;
@@ -1560,38 +1501,57 @@ export const LearnReviewContent = styled.section`
 export const LearnReviewMedia = styled.div`
   display: grid;
   place-items: center;
-  height: 300px;
-  border: 1px dashed #aebdff;
+  min-height: 0;
+  border: 0;
   border-radius: 12px;
-  background: #eef1ff;
+  background: transparent;
   color: #aaa;
   font-size: 13px;
+
+  video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 700 / 466;
+    border-radius: inherit;
+    object-fit: contain;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: inherit;
+    object-fit: contain;
+  }
+
+  p {
+    margin: 0;
+  }
 `;
 
 export const LearnReviewInfo = styled.div`
-  padding-top: 22px;
+  padding-top: 25px;
   white-space: pre-line;
 
   span {
     display: block;
-    margin-bottom: 10px;
-    color: #888;
-    font-size: 14px;
-    line-height: 1;
+    margin-bottom: 12px;
+    color: #3c3c3c;
+    font-size: 23px;
+    font-weight: 800;
   }
 
   p {
-    margin: 0 0 20px;
+    margin: 0 0 23px;
     color: #3c3c3c;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.45;
   }
 `;
 
 export const LearnReviewWord = styled.h2`
-  margin: 0 0 34px;
+  margin: 0 0 39px;
   color: #4359fc;
-  font-size: 36px;
+  font-size: 41px;
   font-weight: 900;
 `;
 
@@ -1623,12 +1583,12 @@ export const LearnReviewControls = styled.div`
 `;
 
 export const LearnReviewButton = styled.button`
-  width: 220px;
-  height: 56px;
+  width: auto;
+  height: auto;
   border: 0;
-  border-radius: 12px;
-  background: #4359fc;
-  color: #fff;
+  border-radius: 0;
+  background: transparent;
+  color: #4359fc;
   font-size: 16px;
   font-weight: 900;
   cursor: pointer;
@@ -1640,16 +1600,16 @@ export const LearnReviewActions = styled.div`
   align-items: center;
   width: min(1320px, 100%);
   margin: 0 auto;
-  padding-top: 24px;
+  padding-top: 34px 120px 0;
   border-top: 1px solid #e6e6e6;
 `;
 
 export const LearnReviewSkip = styled.button`
-  width: 220px;
-  height: 56px;
-  border: 1px solid #d8d8d8;
-  border-radius: 12px;
-  background: #fff;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: #aaa;
   font-size: 16px;
   font-weight: 900;

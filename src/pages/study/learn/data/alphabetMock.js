@@ -1,17 +1,52 @@
 // 문자 학습 임시데이터: 백엔드 연결 전 한글 자모 학습 화면 확인용 데이터
 export const alphabetHandImageUrl = "https://www.figma.com/api/mcp/asset/9ffc9818-567f-497f-998b-4db4b5cb5998";
 
+// 자음 손 모양 이미지: public/assets/image/learn/consonant 폴더 이미지 연결
+export const alphabetHandImageMap = {
+  ㄱ: "/assets/image/learn/consonant/01_g.png",
+  ㄴ: "/assets/image/learn/consonant/02_n.png",
+  ㄷ: "/assets/image/learn/consonant/03_d.png",
+  ㄹ: "/assets/image/learn/consonant/04_r.png",
+  ㅁ: "/assets/image/learn/consonant/05_m.png",
+  ㅂ: "/assets/image/learn/consonant/06_b.png",
+  ㅅ: "/assets/image/learn/consonant/07_s.png",
+  ㅇ: "/assets/image/learn/consonant/08_ng.png",
+  ㅈ: "/assets/image/learn/consonant/09_j.png",
+  ㅊ: "/assets/image/learn/consonant/10_ch.png",
+  ㅋ: "/assets/image/learn/consonant/11_k.png",
+  ㅌ: "/assets/image/learn/consonant/12_t.png",
+  ㅍ: "/assets/image/learn/consonant/13_p.png",
+  ㅎ: "/assets/image/learn/consonant/14_h.png",
+  ㅏ: "/assets/image/learn/vowels/01.png",
+  ㅑ: "/assets/image/learn/vowels/02.png",
+  ㅓ: "/assets/image/learn/vowels/03.png",
+  ㅕ: "/assets/image/learn/vowels/04.png",
+  ㅗ: "/assets/image/learn/vowels/05.png",
+  ㅛ: "/assets/image/learn/vowels/06.png",
+  ㅜ: "/assets/image/learn/vowels/07.png",
+  ㅠ: "/assets/image/learn/vowels/08.png",
+  ㅡ: "/assets/image/learn/vowels/09.png",
+  ㅣ: "/assets/image/learn/vowels/10.png",
+  ㅐ: "/assets/image/learn/vowels/11.png",
+  ㅒ: "/assets/image/learn/vowels/12.png",
+  ㅔ: "/assets/image/learn/vowels/13.png",
+  ㅖ: "/assets/image/learn/vowels/14.png",
+  ㅘ: "/assets/image/learn/vowels/15.png",
+  ㅚ: "/assets/image/learn/vowels/16.png",
+  ㅙ: "/assets/image/learn/vowels/16.png",
+};
+
 export const alphabetMenus = [
   { id: "learn", label: "학습", icon: "◆", to: "/study/learn" },
-  { id: "letter", label: "문자", icon: "韓", active: true },
   { id: "signal", label: "수신호", icon: "▲", to: "/study/learn", activeType: "signal" },
+  { id: "letter", label: "문자", icon: "韓", to: "/study/learn/alphabet", active: true },
   { id: "profile", label: "프로필", icon: "👤", to: "/mypage/learning" },
   { id: "more", label: "더 보기", icon: "⋯" },
 ];
 
 export const alphabetQuests = [
-  { id: 1, icon: "⚡", title: "10 EXP 획득하기", current: 0, total: 10, reward: "🎁" },
-  { id: 2, icon: "🤟", title: "자모 카드 5개 확인", current: 2, total: 5, reward: "🎁" },
+  { id: 1, icon: "⚡", title: "오늘 단어 10개 학습하기", current: 0, total: 10, reward: "🎁" },
+  { id: 2, icon: "🤟", title: "오늘 단어 5개 학습하기", current: 0, total: 5, reward: "🎁" },
   { id: 3, icon: "⏱", title: "10분 동안 학습하기", current: 0, total: 10, reward: "🎁" },
 ];
 
@@ -56,5 +91,5 @@ export const getAlphabetInfo = (letter) => ({
   name: alphabetInfoMap[letter]?.name || "글자",
   sound: alphabetInfoMap[letter]?.sound || "[ sound ]",
   desc: alphabetInfoMap[letter]?.desc || ["한글 자모를 손 모양과 함께 익혀요.", "카드를 넘기며 반복 학습해보세요."],
-  imageUrl: alphabetHandImageUrl,
+  imageUrl: alphabetHandImageMap[letter] || alphabetHandImageUrl,
 });

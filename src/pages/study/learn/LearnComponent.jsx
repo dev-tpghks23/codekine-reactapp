@@ -2,8 +2,10 @@
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLearn } from "../hooks/useLearn";
+import { useTodayQuests } from "../hooks/useTodayQuests";
 import LearnQuestPanel from "./parts/LearnQuestPanel";
 import LearnRoadmapItem from "./parts/LearnRoadmapItem";
+import LearnSideMenu from "./parts/LearnSideMenu";
 import * as S from "./style";
 
 const SERVICE_READY_MESSAGE = "\uc11c\ube44\uc2a4 \uc900\ube44\uc911\uc785\ub2c8\ub2e4.";
@@ -12,6 +14,7 @@ const LearnComponent = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { data, loading, error } = useLearn();
+  const quests = useTodayQuests(data.quests);
   const [activeType, setActiveType] = useState(location.state?.activeType || "sign");
   const [selectedLessonId, setSelectedLessonId] = useState(null);
   const roadmap = data.roadmaps[activeType] || data.roadmaps.sign;
@@ -60,7 +63,7 @@ const LearnComponent = () => {
     }
 
     if (activeType === "sign" && Number.isFinite(Number(lesson.id))) {
-      navigate("/study/learn/quiz/greeting/questions/1", {
+      navigate(`/study/learn/quiz/greeting/questions/1?eduId=${lesson.id}`, {
         state: {
           eduId: lesson.id,
           lessonTitle: lesson.title,
@@ -108,22 +111,7 @@ const LearnComponent = () => {
   return (
     <S.LearnWrap>
       <S.LearnLayout>
-        <S.SideMenu aria-label="\ud559\uc2b5 \uba54\ub274">
-          {currentMenus.map((menu) => (
-            <S.SideButton
-              key={menu.id}
-              type="button"
-              $active={menu.active}
-              onMouseEnter={() => handleSelectLearningType(menu)}
-              onMouseOver={() => handleSelectLearningType(menu)}
-              onFocus={() => handleSelectLearningType(menu)}
-              onClick={() => handleMenu(menu)}
-            >
-              <span>{menu.icon}</span>
-              {menu.label}
-            </S.SideButton>
-          ))}
-        </S.SideMenu>
+        <LearnSideMenu menus={currentMenus} onMenu={handleMenu} onSelectType={handleSelectLearningType} />
 
         <S.MainArea>
           <S.TopBar>
@@ -175,7 +163,7 @@ const LearnComponent = () => {
           </S.ChapterPanel>
         </S.MainArea>
 
-        <LearnQuestPanel quests={data.quests} />
+        <LearnQuestPanel quests={quests} />
       </S.LearnLayout>
 
       <S.ProgressArea>

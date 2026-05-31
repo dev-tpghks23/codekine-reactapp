@@ -10,7 +10,7 @@ const SearchResultList = ({ results = [], onSelect }) => {
             {result.cardImage ? (
               <S.ResultThumb src={result.cardImage} alt={`${result.word} 수어 이미지`} />
             ) : (
-              <span>이미지 슬롯</span>
+              <span>이미지 없음</span>
             )}
           </S.ResultThumbWrap>
           <S.ResultText>

@@ -132,14 +132,14 @@ const StudyChapterQuizComponent = () => {
 
   if (!chapter) {
     return (
-      <S.ChapterWrap>
+      <S.ChapterReadyWrap>
         <S.ChapterReadyCard>
           <h1>퀴즈를 찾을 수 없습니다.</h1>
           <button type="button" onClick={() => navigate("/study/chapter")}>
             목록으로 돌아가기
           </button>
         </S.ChapterReadyCard>
-      </S.ChapterWrap>
+      </S.ChapterReadyWrap>
     );
   }
 
@@ -218,7 +218,7 @@ const StudyChapterQuizComponent = () => {
   }
 
   return (
-    <S.ChapterWrap>
+    <S.ChapterReadyWrap>
       <S.ChapterReadyCard>
         <span>{chapter.label}</span>
         <img src={chapter.image} alt={`${chapter.title} 아이콘`} />
@@ -233,7 +233,7 @@ const StudyChapterQuizComponent = () => {
           퀴즈 시작하기
         </button>
       </S.ChapterReadyCard>
-    </S.ChapterWrap>
+    </S.ChapterReadyWrap>
   );
 };
 

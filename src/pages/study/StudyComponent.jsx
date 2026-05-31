@@ -1,6 +1,6 @@
 // 학습 홈 화면 컴포넌트: 메인 카드, 검색 진입, 로그인 필요 기능 분기담당
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import StudyAttendancePopup from "./attendance/StudyAttendancePopup";
 import { useStudyUser } from "./hooks/useStudyUser";
 import * as S from "./style";
@@ -27,7 +27,7 @@ const featureCards = [
     label: "출석체크",
     title: "출석체크",
     desc: "매일매일 출석해요!",
-    image: "/assets/image/attendCheck.png",
+    image: "/assets/image/learn/attendCheck.png",
     tone: "green",
     action: "popup",
     requiresLogin: true,
@@ -37,7 +37,7 @@ const featureCards = [
     label: "오! 퀴즈",
     title: "오! 퀴즈",
     desc: "알아두면 좋을 퀴즈",
-    image: "/assets/image/quiz.png",
+    image: "/assets/image/learn/quiz.png",
     tone: "blue",
     to: "/study/chapter",
     requiresLogin: true,
@@ -46,7 +46,7 @@ const featureCards = [
     label: "수어학습",
     title: "수어 학습",
     desc: "눈으로 듣는 새로운 대화법",
-    image: "/assets/image/signLearn.png",
+    image: "/assets/image/learn/signLearn.png",
     tone: "yellow",
     to: "/study/learn",
     requiresLogin: true,
@@ -55,7 +55,7 @@ const featureCards = [
     label: "응급수신호",
     title: "응급수신호",
     desc: "위험을 알리는 방법",
-    image: "/assets/image/emergency.png",
+    image: "/assets/image/learn/emergency.png",
     tone: "red",
     to: "/study/learn/quiz/sos/questions/1",
     requiresLogin: true,
@@ -64,11 +64,18 @@ const featureCards = [
     label: "모스부호",
     title: "모스부호",
     desc: "빛과 점으로 전하는 신호",
-    image: "/assets/image/mors.png",
+    image: "/assets/image/learn/mors.png",
     tone: "purple",
     to: "/study/chapter/morse",
     requiresLogin: true,
   },
+];
+
+// 영상 카테고리 탭 목록
+const videoTabs = [
+  { label: "수어", image: "/assets/image/learn/signLearn.png" },
+  { label: "수신호", image: "/assets/image/learn/emergency.png" },
+  { label: "모스부호", image: "/assets/image/learn/mors.png" },
 ];
 
 // 검색 섹션에 보여줄 추천 단어 목록
@@ -87,46 +94,66 @@ const wordItems = [
   { icon: "🚌", text: "버스" },
 ];
 
-// 영상 카테고리 탭 목록
-const videoTabs = [
-  { label: "수어", image: "/assets/image/signLearn.png" },
-  { label: "수신호", image: "/assets/image/emergency.png" },
-  { label: "모스부호", image: "/assets/image/mors.png" },
-];
-
 // 유튜브썸네일생성: 유튜브 영상 ID로 카드 썸네일 주소 만드는
 const getYoutubeThumbnail = (videoId) => `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
-// 오늘의 단어 영상 카드 목록
-const videoCards = [
-  {
-    category: "숫자",
-    title: "1부터 1000까지 세어보기 수화 지숫자",
-    views: "유튜브",
-    youtubeUrl: "https://youtu.be/1JyJwc_Hd8U?si=BqFaG4FwoDnjfE8b",
-    thumbnail: getYoutubeThumbnail("1JyJwc_Hd8U"),
-  },
-  {
-    category: "수어",
-    title: '지문자로 한글이름 써보기 "내 이름을 수화로?"',
-    views: "유튜브",
-    youtubeUrl: "https://youtu.be/1IDTB4KQ-Fk?si=vmVMI9osUms7xrvO",
-    thumbnail: getYoutubeThumbnail("1IDTB4KQ-Fk"),
-  },
-  {
-    category: "알파벳",
-    title: "미국 수어 알파벳(ABC) 핑거스펠링 배우기",
-    views: "유튜브",
-    youtubeUrl: "https://youtu.be/hRzXnPTW8jY?si=uC7DBkjdD4MHMOTN",
-    thumbnail: getYoutubeThumbnail("hRzXnPTW8jY"),
-  },
-];
+// 영상 탭별 카드 목록
+const videoCardsByTab = {
+  수어: [
+    {
+      category: "숫자",
+      title: "1부터 1000까지 세어보기 수화 지숫자",
+      views: "유튜브",
+      youtubeUrl: "https://youtu.be/1JyJwc_Hd8U?si=BqFaG4FwoDnjfE8b",
+      thumbnail: getYoutubeThumbnail("1JyJwc_Hd8U"),
+    },
+    {
+      category: "수어",
+      title: '지문자로 한글이름 써보기 "내 이름을 수화로?"',
+      views: "유튜브",
+      youtubeUrl: "https://youtu.be/1IDTB4KQ-Fk?si=vmVMI9osUms7xrvO",
+      thumbnail: getYoutubeThumbnail("1IDTB4KQ-Fk"),
+    },
+    {
+      category: "알파벳",
+      title: "미국 수어 알파벳(ABC) 핑거스펠링 배우기",
+      views: "유튜브",
+      youtubeUrl: "https://youtu.be/hRzXnPTW8jY?si=uC7DBkjdD4MHMOTN",
+      thumbnail: getYoutubeThumbnail("hRzXnPTW8jY"),
+    },
+  ],
+  수신호: [],
+  모스부호: [
+    {
+      category: "교신",
+      title: "한글 CW 교신에 자주 나오는 단어",
+      views: "유튜브",
+      youtubeUrl: "https://youtu.be/fHPC_1MjqD0?si=hhVIZw8iJj7jIqAg",
+      thumbnail: getYoutubeThumbnail("fHPC_1MjqD0"),
+    },
+    {
+      category: "한글",
+      title: "한글 모스부호 자음, 모음 표현방법",
+      views: "유튜브",
+      youtubeUrl: "https://youtu.be/c7QkBMACdEo?si=iG0hRGXEdx6SJyMn",
+      thumbnail: getYoutubeThumbnail("c7QkBMACdEo"),
+    },
+    {
+      category: "SOS",
+      title: "SOS 모스부호 신호 배우기",
+      views: "유튜브",
+      youtubeUrl: "https://youtu.be/vqHIyb_fKXg?si=1EjqOzJRRBd4MfXP",
+      thumbnail: getYoutubeThumbnail("vqHIyb_fKXg"),
+    },
+  ],
+};
 
 const StudyComponent = () => {
   const navigate = useNavigate();
   const { isGuest } = useStudyUser();
   const [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
   const [keyword, setKeyword] = useState("");
+  const [activeVideoTab, setActiveVideoTab] = useState("수어");
 
 
   const location = useLocation();
@@ -137,6 +164,7 @@ const StudyComponent = () => {
         ?.scrollIntoView();
     }
   }, [location.state]);
+
   // 로그인 해야하는 서비스들 alert
   const requireLogin = (callback) => {
     if (isGuest) {
@@ -146,6 +174,17 @@ const StudyComponent = () => {
     }
 
     callback();
+  };
+
+  // 로그인 사용자 -> 바로 학습 시작 / 비로그인 사용자 -> 서비스 맛보기
+  const handleExperience = () => {
+    if (isGuest) {
+      navigate("/study/experience");
+      
+      return;
+    }
+
+    navigate("/study/learn");
   };
 
   // 검색어 -> 검색 페이지
@@ -207,11 +246,18 @@ const StudyComponent = () => {
           <p className="heroIcons">👋 ✌️</p>
           <h1>지금 바로 배워보세요!</h1>
           <p>회원가입 없이 다양한 언어표현을 재미있게 체험할 수 있어요</p>
-          <S.HeroExperienceLink to="/study/experience" aria-label="체험학습으로 이동">
+          <S.HeroExperienceLink
+            as="button"
+            type="button"
+            onClick={handleExperience}
+            aria-label={isGuest ? "체험학습으로 이동" : "학습으로 이동"}
+          >
             <span className="circle">
               <span className="icon arrow" />
             </span>
-            <span className="buttonText">지금 체험하기 👻</span>
+            <span className="buttonText">
+              {isGuest ? "지금 체험하기 👻" : "지금 시작하기 👻"}
+            </span>
           </S.HeroExperienceLink>
         </S.BannerContent>
       </S.Banner>
@@ -274,28 +320,40 @@ const StudyComponent = () => {
 
         <S.VideoTabs>
           {videoTabs.map((tab) => (
-            <button type="button" key={tab.label} onClick={() => requireLogin(() => navigate("/study/learn"))}>
+            <button
+              type="button"
+              key={tab.label}
+              $active={activeVideoTab === tab.label}
+              onClick={() => setActiveVideoTab(tab.label)}
+            >
               <img src={tab.image} alt="" />
               {tab.label}
             </button>
           ))}
         </S.VideoTabs>
 
-        <S.VideoGrid>
-          {videoCards.map((video) => (
-            <S.VideoCard key={video.title} href={video.youtubeUrl} target="_blank" rel="noreferrer">
-              <div>
-                <span>{video.category}</span>
-                <strong>{video.title}</strong>
-                <p>{video.views}에서 보기</p>
-              </div>
-              <figure>
-                <img src={video.thumbnail} alt={`${video.title} 썸네일`} />
-                <span className="play">▶</span>
-              </figure>
-            </S.VideoCard>
-          ))}
-        </S.VideoGrid>
+        {videoCardsByTab[activeVideoTab].length > 0 ? (
+          <S.VideoGrid>
+            {videoCardsByTab[activeVideoTab].map((video) => (
+              <S.VideoCard key={video.title} href={video.youtubeUrl} target="_blank" rel="noreferrer">
+                <div>
+                  <span>{video.category}</span>
+                  <strong>{video.title}</strong>
+                  <p>{video.views}에서 보기</p>
+                </div>
+                <figure>
+                  <img src={video.thumbnail} alt={`${video.title} 썸네일`} />
+                  <span className="play">▶</span>
+                </figure>
+              </S.VideoCard>
+            ))}
+          </S.VideoGrid>
+        ) : (
+          <S.VideoEmpty>
+            <strong>{activeVideoTab} 영상이 아직 없어요.</strong>
+            <span>영상이 준비되면 이곳에서 바로 확인할 수 있어요.</span>
+          </S.VideoEmpty>
+        )}
 
         <S.ActionLink to="/study/learn" onClick={(event) => handleProtectedLink(event, "/study/learn")}>
           더 많은 영상 보기 →

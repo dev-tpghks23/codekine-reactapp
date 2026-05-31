@@ -1,7 +1,7 @@
 // 학습퀴즈피드백: 정답/오답 결과와 다음 행동 버튼
 import * as S from "../style";
 
-const LearnQuizFeedback = ({ status, exp, message, answer, onNext }) => {
+const LearnQuizFeedback = ({ status, exp, message, description, onNext }) => {
 
   const isCorrect = status === "correct";
 
@@ -11,7 +11,13 @@ const LearnQuizFeedback = ({ status, exp, message, answer, onNext }) => {
       <S.LearnQuizFeedbackText $status={status}>
         <strong>{isCorrect ? "정답이에요!" : "아쉬워요!"}</strong>
         <p>{message}</p>
-        <span>{isCorrect ? `+${exp} XP 획득` : `정답: ${answer}`}</span>
+        {!isCorrect && description && (
+          <div className="descriptionWrap">
+            <span className="descriptionLabel">설명</span>
+            <p className="description">{description}</p>
+          </div>
+        )}
+        {isCorrect && <span>{`+${exp} XP 획득`}</span>}
       </S.LearnQuizFeedbackText>
       <S.LearnQuizFeedbackActions $status={status}>
         <button type="button" onClick={onNext}>
