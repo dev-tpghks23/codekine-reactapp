@@ -132,13 +132,16 @@ export const HeroExperienceLink = styled(Link)`
   height: 52px;
   padding: 0;
   border: 0;
+  background: transparent;
   color: #1a1a1a;
+  cursor: pointer;
   font-size: ${({ theme }) => theme.FONT_SIZE.h9};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
   line-height: 52px;
   text-decoration: none;
   vertical-align: middle;
   outline: none;
+  appearance: none;
 
   .circle {
     position: relative;
@@ -497,9 +500,10 @@ export const VideoTabs = styled.div`
     align-items: center;
     gap: 9px;
     padding: 0 18px;
-    border: 1px solid ${({ theme }) => theme.GRAYSCALE[3]};
+    border: 1px solid ${({ theme, $active }) => ($active ? theme.PALETTE.primary.main : theme.GRAYSCALE[3])};
     border-radius: 10px;
-    color: #1a1a1a;
+    background: ${({ $active }) => ($active ? "rgba(67, 89, 252, 0.08)" : "transparent")};
+    color: ${({ theme, $active }) => ($active ? theme.PALETTE.primary.main : "#1a1a1a")};
     font-size: ${({ theme }) => theme.FONT_SIZE.h10};
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
     transition:
@@ -526,6 +530,27 @@ export const VideoTabs = styled.div`
     width: 20px;
     height: 20px;
     object-fit: contain;
+  }
+`;
+
+export const VideoEmpty = styled.div`
+  min-height: 338px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 12px;
+  margin-bottom: 70px;
+  background: transparent;
+
+  strong {
+    color: #1a1a1a;
+    font-size: ${({ theme }) => theme.FONT_SIZE.h8};
+    font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
+  }
+
+  span {
+    color: #777;
+    font-size: ${({ theme }) => theme.FONT_SIZE.h10};
   }
 `;
 

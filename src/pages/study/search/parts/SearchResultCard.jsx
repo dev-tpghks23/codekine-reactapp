@@ -29,7 +29,7 @@ const SearchResultCard = ({ result, currentIndex, totalCount, onBack, onPrev, on
       <S.DetailBody>
         <S.DetailMediaWrap>
           {hasVideoSource(result.videoUrl) ? (
-            <S.DetailVideo controls poster={result.cardImage || undefined}>
+            <S.DetailVideo controls preload="metadata">
               <source src={result.videoUrl} />
               수어 영상을 재생할 수 없어요.
             </S.DetailVideo>
@@ -38,60 +38,33 @@ const SearchResultCard = ({ result, currentIndex, totalCount, onBack, onPrev, on
           ) : (
             <S.MediaPlaceholder>
               <span>📌</span>
-              <p>수어 표현과 생동감 있는 영상 슬롯</p>
+              <p>등록된 수어 이미지나 영상이 없어요.</p>
             </S.MediaPlaceholder>
           )}
         </S.DetailMediaWrap>
 
         <S.DetailInfo>
           <S.StepTitle>
-            <span>2</span>
-            수어 동작
-          </S.StepTitle>
-          <S.MotionList>
-            {(result.motions || [
-              { id: 1, icon: "👊", label: "동작 ①" },
-              { id: 2, icon: "✋", label: "동작 ②" },
-              { id: 3, icon: "👋", label: "동작 ③" },
-            ]).map((motion) => (
-              <S.MotionItem key={motion.id}>
-                <strong>{motion.icon}</strong>
-                <span>{motion.label}</span>
-              </S.MotionItem>
-            ))}
-          </S.MotionList>
-
-          {result.videoUrl && (
-            <S.VideoSourceLink href={result.videoUrl} target="_blank" rel="noreferrer">
-              ▶ 동작 영상 보기
-            </S.VideoSourceLink>
-          )}
-
-          <S.StepTitle>
-            <span>3</span>
-            수어의 뜻
+            수어 표현
           </S.StepTitle>
           <S.MeaningBox>
             <S.DetailTitle>{result.word}</S.DetailTitle>
-            <S.DetailMeaning> · {result.meaning}</S.DetailMeaning>
-            <S.DetailCategoryText>{result.category} · 검색 결과 · 한국수어사전</S.DetailCategoryText>
+            <S.DetailCategoryText>{result.category}</S.DetailCategoryText>
           </S.MeaningBox>
 
           <S.StepTitle>
-            <span>4</span>
             동작 설명
           </S.StepTitle>
           <S.DetailDesc>{result.desc}</S.DetailDesc>
 
           <S.StepTitle>
-            <span>5</span>
             한국수어사전 원문
           </S.StepTitle>
           <S.ExampleBox>
-            <S.SourceThumb>{result.cardImage ? <img src={result.cardImage} alt="" /> : "이미지 슬롯"}</S.SourceThumb>
+            <S.SourceThumb>{result.cardImage ? <img src={result.cardImage} alt="" /> : "이미지 없음"}</S.SourceThumb>
             <div>
               <S.ExampleLabel>한국수어사전</S.ExampleLabel>
-              <p>{result.sourceUrl ? "원문에서 정확한 수어 정보를 확인할 수 있어요." : result.example}</p>
+              <p>{result.sourceUrl ? "원문에서 정확한 수어 정보를 확인할 수 있어요." : "등록된 원문 링크가 없어요."}</p>
             </div>
             {result.sourceUrl && (
               <S.SourceButton href={result.sourceUrl} target="_blank" rel="noreferrer">
@@ -99,16 +72,8 @@ const SearchResultCard = ({ result, currentIndex, totalCount, onBack, onPrev, on
               </S.SourceButton>
             )}
           </S.ExampleBox>
-
-          <S.TagList>
-            {result.tags?.map((tag) => (
-              <S.TagItem key={tag}>#{tag}</S.TagItem>
-            ))}
-          </S.TagList>
         </S.DetailInfo>
       </S.DetailBody>
-
-      <S.DetailStartButton type="button">이 단어로 학습 시작하기 →</S.DetailStartButton>
     </S.DetailCard>
   );
 };

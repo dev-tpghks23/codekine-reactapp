@@ -2,8 +2,20 @@ import styled from "styled-components";
 import { styles } from "../style";
 import theme from "../../../styles/theme";
 
-const backGroundGray = "#F7F7FB";
-const textGray = "#888888";
+export const ReviewCard = styled.div`
+  width: 380px;
+  height: 220px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  text-align: left;
+  flex-shrink: 0;
+  overflow: hidden;
+`;
 
 export const ReviewCardGrid = styled.div`
   width: 100%;
@@ -73,7 +85,7 @@ export const ProfileSub = styled.span`
 
 export const SectionWrap = styled.div`
   width: 100%;
-  background-color: ${backGroundGray};
+  background-color: #f0eff5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,7 +96,8 @@ export const SectionWrap = styled.div`
 export const TitleWrap = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 40px;
 `;
 
 export const Title = styled.h2`
@@ -109,17 +122,6 @@ export const CardRow = styled.div`
 
 /* ── Review Card ── */
 
-export const ReviewCard = styled.div`
-  width: 340px;
-  background-color: ${theme.PALETTE.white};
-  border-radius: 20px;
-  padding: 28px 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  text-align: left;
-`;
-
 
 export const PageWrap = styled.div`
   width: 100%;
@@ -132,6 +134,7 @@ export const PageInner = styled.div`
   margin: 0 auto;
   padding: 60px 24px;
 `;
+
 
 export const PageHeader = styled.div`
   display: flex;
@@ -162,12 +165,71 @@ export const ReviewGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  width: 100%;
 
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
+  }
+`;
+
+export const SliderWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+export const CardViewport = styled.div`
+  width: calc(380px * 3 + 24px * 2);
+  overflow: hidden;
+`;
+
+export const CardTrack = styled.div`
+  display: flex;
+  gap: 24px;
+  transform: translateX(-${({ $offset }) => $offset}px);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+`;
+
+export const ArrowBtn = styled.button`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  &:hover:not(:disabled) {
+    background: #f5f5f5;
+  }
+`;
+
+export const MoreButton = styled.button`
+  margin-top: 32px;
+  padding: 12px 32px;
+  border-radius: 24px;
+  border: 1.5px solid #7b5ea7;
+  background: #fff;
+  color: #7b5ea7;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #7b5ea7;
+    color: #fff;
   }
 `;

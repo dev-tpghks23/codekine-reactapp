@@ -1,10 +1,10 @@
 // 오늘의 퀘스트 패널: 퀘스트 진행도와 보상표시
 import * as S from "../style";
 
-const LearnQuestPanel = ({ quests = [] }) => {
+const LearnQuestPanel = ({ quests = [], panelComponent: PanelComponent = S.QuestPanel }) => {
 
   return (
-    <S.QuestPanel>
+    <PanelComponent>
       <S.QuestTitle>{"\uc624\ub298\uc758 \ud018\uc2a4\ud2b8"}</S.QuestTitle>
       {quests.map((quest) => {
         const progress = Math.min((quest.current / quest.total) * 100, 100);
@@ -27,7 +27,7 @@ const LearnQuestPanel = ({ quests = [] }) => {
           </S.QuestItem>
         );
       })}
-    </S.QuestPanel>
+    </PanelComponent>
   );
 };
 

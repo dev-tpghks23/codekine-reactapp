@@ -3,8 +3,8 @@ export const learnHomeMock = {
   streak: "7",
   menus: [
     { id: "learn", type: "sign", label: "\ud559\uc2b5", icon: "\u25c6" },
-    { id: "letter", label: "\ubb38\uc790", icon: "\u97d3", to: "/study/learn/alphabet" },
     { id: "signal", type: "signal", label: "\uc218\uc2e0\ud638", icon: "\u25b2" },
+    { id: "letter", label: "\ubb38\uc790", icon: "\u97d3", to: "/study/learn/alphabet" },
     { id: "profile", label: "\ud504\ub85c\ud544", icon: "\ud83d\udc64", to: "/mypage/learning" },
     { id: "more", label: "\ub354 \ubcf4\uae30", icon: "\u22ef" },
   ],
@@ -129,8 +129,8 @@ export const learnHomeMock = {
     },
   },
   quests: [
-    { id: 1, icon: "\u26a1", title: "10 EXP \ud68d\ub4dd\ud558\uae30", current: 0, total: 10, reward: "\ud83c\udf81" },
-    { id: 2, icon: "\ud83e\udd1f", title: "\ub808\uc2a8 2\uac1c\uc5d0\uc11c \uc5f0\uc18d 5\uac1c \uc815\ub2f5", current: 0, total: 2, reward: "\ud83c\udf81" },
+    { id: 1, icon: "\u26a1", title: "\uc624\ub298 \ub2e8\uc5b4 10\uac1c \ud559\uc2b5\ud558\uae30", current: 0, total: 10, reward: "\ud83c\udf81" },
+    { id: 2, icon: "\ud83e\udd1f", title: "\uc624\ub298 \ub2e8\uc5b4 5\uac1c \ud559\uc2b5\ud558\uae30", current: 0, total: 5, reward: "\ud83c\udf81" },
     { id: 3, icon: "\u23f1", title: "10\ubd84 \ub3d9\uc548 \ud559\uc2b5\ud558\uae30", current: 0, total: 10, reward: "\ud83c\udf81" },
   ],
 };

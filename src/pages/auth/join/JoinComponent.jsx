@@ -70,8 +70,10 @@ export default function JoinComponent() {
     if (!memberPhone) return;
     setSmsLoading(true);
     setSmsMsg("");
+    // 테스트 시: SMS 발송 생략
+    setCodeSent(true); setSmsMsg("(테스트) 인증 생략"); setSmsLoading(false); return;
     try {
-      const res = await fetch("http://localhost:10000/api/sms/phone/verification-code", {
+      const res = await fetch("http://localhost:10000/api/verifications/phone/verification-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ memberPhone }),
@@ -95,9 +97,11 @@ export default function JoinComponent() {
     if (!memberPhone || !verifyCode) return;
     setSmsLoading(true);
     setSmsMsg("");
+    // 테스트 시: 인증코드 확인 생략
+    setCodeVerified(true); setSmsMsg("(테스트) 인증 완료"); setSmsLoading(false); return;
     try {
-      const res = await fetch("http://localhost:10000/api/sms/phone/verification-code/verify", {
-        method: "POST",
+      const res = await fetch("http://localhost:10000/api/verifications/phone/verification-code", {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ memberPhone, code: verifyCode }),
       });
@@ -127,13 +131,14 @@ export default function JoinComponent() {
     setSubmitLoading(true);
     setSubmitMsg("");
     try {
-      const res = await fetch("http://localhost:10000/api/users/join", {
+      const res = await fetch("http://localhost:10000/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userName: form.userName,
           userEmail: form.userEmail,
           userPassword: form.userPassword,
+          userBirth: birth,
         }),
       });
       const data = await res.json();
@@ -152,6 +157,7 @@ export default function JoinComponent() {
   return (
     <S.PageWrap>
       <S.Hero>
+        <S.Logo src="/assets/image/layout/logo.svg" alt="이음" onClick={() => navigate("/")} />
         <S.HeroTitle>이음과 함께<br />새로운 소통을 시작해보세요</S.HeroTitle>
         <S.StepBar>
           {steps.map((name, i) => (

@@ -8,8 +8,8 @@ const LearnQuizReview = ({
   wordLabel = "수어 표현",
   title,
   desc,
-  action,
-  situation,
+  videoUrl,
+  imageUrl,
   onSkip,
   onRemember,
 }) => {
@@ -18,34 +18,38 @@ const LearnQuizReview = ({
       <S.LearnReviewIntro>
         <S.LearnReviewLabel>{label}</S.LearnReviewLabel>
         <S.LearnReviewTitle>{headline}</S.LearnReviewTitle>
-        <S.LearnReviewDesc>{desc}</S.LearnReviewDesc>
+        <S.LearnReviewDesc>영상과 설명을 보며 수어 표현을 다시 확인해보세요.</S.LearnReviewDesc>
       </S.LearnReviewIntro>
 
       <S.LearnReviewContent>
-        <S.LearnReviewMedia>📌 {mediaText}</S.LearnReviewMedia>
+        <S.LearnReviewMedia>
+          {videoUrl ? (
+            <video controls preload="metadata">
+              <source src={videoUrl} />
+              수어 영상을 재생할 수 없어요.
+            </video>
+          ) : imageUrl ? (
+            <img src={imageUrl} alt={`${title} 수어`} />
+          ) : (
+            <p>📌 {mediaText}</p>
+          )}
+        </S.LearnReviewMedia>
         <S.LearnReviewInfo>
           <span>{wordLabel}</span>
           <S.LearnReviewWord>{title}</S.LearnReviewWord>
-          <span>동작</span>
-          <p>{action}</p>
-          <span>사용 상황</span>
-          <p>{situation}</p>
+          <span>설명</span>
+          <p>{desc}</p>
         </S.LearnReviewInfo>
-        <S.LearnReviewControls>
-          <button type="button">▶ 재생</button>
-          <button type="button">0.5× 느리게</button>
-          <button type="button">반복 재생</button>
-        </S.LearnReviewControls>
       </S.LearnReviewContent>
 
-      <S.LearnReviewActions>
-        <S.LearnReviewSkip type="button" onClick={onSkip}>
+      <S.LearnQuizBottom>
+        <S.LearnQuizSkip type="button" onClick={onSkip}>
           건너뛰기
-        </S.LearnReviewSkip>
-        <S.LearnReviewButton type="button" onClick={onRemember}>
-          기억했어요! →
-        </S.LearnReviewButton>
-      </S.LearnReviewActions>
+        </S.LearnQuizSkip>
+        <S.LearnQuizCheck type="button" onClick={onRemember}>
+          확인
+        </S.LearnQuizCheck>
+      </S.LearnQuizBottom>
     </S.LearnReviewCard>
   );
 };

@@ -1,7 +1,6 @@
 // 검색화면컴포넌트: 검색창, 결과 목록, 상세 카드 전환을 담당합니다.
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { signWordCategories, signWordMockList } from "./data/signWordMock";
 import { fetchSignWords } from "../apis/SignWordApi";
 import { useSignWordSearch } from "../hooks/useSignWordSearch";
 import { mapSignWords } from "../mappers/signWordMapper";
@@ -9,25 +8,9 @@ import SearchResultCard from "./parts/SearchResultCard";
 import SearchResultList from "./parts/SearchResultList";
 import * as S from "./style";
 
-// 임시데이터필터함수: API 실패 시 mock 데이터에서 검색어와 카테고리로 결과를 찾습니다.
-const getMockResults = (searchKeyword, category) => {
-  const trimmedKeyword = searchKeyword.trim();
-
-  return signWordMockList.filter((item) => {
-    const matchedCategory = category === "전체" || item.category === category;
-    const matchedKeyword =
-      !trimmedKeyword ||
-      item.word.includes(trimmedKeyword) ||
-      item.meaning.includes(trimmedKeyword) ||
-      item.desc.includes(trimmedKeyword);
-
-    return matchedCategory && matchedKeyword;
-  });
-};
-
 const StudySearchComponent = () => {
   const location = useLocation();
-  const initialKeyword = location.state?.keyword || "";
+  const initialKeyword = location.state?.keyword || new URLSearchParams(location.search).get("keyword") || "";
   const {
     keyword,
     setKeyword,
@@ -40,8 +23,13 @@ const StudySearchComponent = () => {
     error,
     setError,
   } = useSignWordSearch(initialKeyword);
-  const [submittedKeyword, setSubmittedKeyword] = useState(initialKeyword);
   const [selectedCategory, setSelectedCategory] = useState("전체");
+
+  // 검색카테고리: 실제 API 검색 결과에 포함된 분류만 필터로 보여줍니다.
+  const categories = useMemo(
+    () => ["전체", ...new Set(results.map((item) => item.category).filter(Boolean))],
+    [results]
+  );
 
   // 검색결과필터: API 결과를 카테고리 기준으로 한 번 더 골라냅니다.
   const filteredResults = useMemo(() => {
@@ -50,26 +38,19 @@ const StudySearchComponent = () => {
 
   const selectedResult = selectedIndex !== null ? filteredResults[selectedIndex] : null;
 
-  // 검색실행함수: 백엔드 검색 API를 호출하고 실패하면 임시데이터를 보여줍니다.
-  const searchSignWords = async (searchKeyword = keyword, category = selectedCategory) => {
+  // 검색실행함수: 백엔드 검색 API 결과만 화면에 보여줍니다.
+  const searchSignWords = async (searchKeyword = keyword) => {
     setLoading(true);
     setError(null);
     setSelectedIndex(null);
+    setSelectedCategory("전체");
 
     try {
       const data = await fetchSignWords(searchKeyword);
-      const mappedResults = mapSignWords(data);
-
-      if (mappedResults.length === 0) {
-        setResults(getMockResults(searchKeyword, category));
-        setError("검색 결과가 없어 임시데이터를 보여주고 있어요.");
-        return;
-      }
-
-      setResults(mappedResults);
+      setResults(mapSignWords(data));
     } catch {
-      setResults(getMockResults(searchKeyword, category));
-      setError("서버 연결이 어려워 임시데이터를 보여주고 있어요.");
+      setResults([]);
+      setError("검색 서버에 연결하기 어려워요. 잠시 후 다시 시도해주세요.");
     } finally {
       setLoading(false);
     }
@@ -77,7 +58,7 @@ const StudySearchComponent = () => {
 
   // 첫검색실행: 검색 페이지에 처음 들어오면 기본 검색 결과를 준비합니다.
   useEffect(() => {
-    searchSignWords(initialKeyword, selectedCategory);
+    searchSignWords(initialKeyword);
     // 최초 진입 시에만 실행하기 위해 의존성을 고정합니다.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -85,8 +66,7 @@ const StudySearchComponent = () => {
   // 검색실행이벤트: 입력한 검색어로 결과 목록을 다시 보여줍니다.
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSubmittedKeyword(keyword);
-    searchSignWords(keyword, selectedCategory);
+    searchSignWords(keyword);
   };
 
   // 카테고리선택함수: 선택한 분류 기준으로 결과를 다시 필터링합니다.
@@ -94,9 +74,6 @@ const StudySearchComponent = () => {
     setSelectedCategory(category);
     setSelectedIndex(null);
 
-    if (error) {
-      setResults(getMockResults(submittedKeyword, category));
-    }
   };
 
   // 상세이동함수: 목록에서 선택한 결과를 상세 카드로 전환합니다.
@@ -119,7 +96,7 @@ const StudySearchComponent = () => {
       <S.SearchHero>
         <S.Kicker>수어 검색</S.Kicker>
         <S.Title>필요한 수어 표현을 바로 찾아보세요</S.Title>
-        <S.Desc>단어를 검색하고 카드에서 의미, 사용 예시, 관련 분류를 확인할 수 있어요.</S.Desc>
+        <S.Desc>단어를 검색하고 카드에서 영상, 분류, 동작 설명을 확인할 수 있어요.</S.Desc>
 
         <S.SearchForm onSubmit={handleSubmit}>
           <S.SearchInput
@@ -134,7 +111,7 @@ const StudySearchComponent = () => {
       </S.SearchHero>
 
       <S.CategoryList aria-label="수어 검색 카테고리">
-        {signWordCategories.map((category) => (
+        {categories.map((category) => (
           <S.CategoryButton
             type="button"
             key={category}

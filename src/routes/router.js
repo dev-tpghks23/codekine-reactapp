@@ -79,13 +79,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <EumMainContainer />
+        element: <EumMainContainer />,
       },
       { 
         path: "reviews", 
         element: <ReviewAllPage /> 
       },
-
       { path: "exam",
         element: <ExamContainer />,
         children: [

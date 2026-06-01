@@ -39,9 +39,17 @@ const badgePop = `
 export const ChapterWrap = styled.section`
   width: 100%;
   min-height: calc(100vh - 80px);
-  padding: 110px 0 150px;
+  padding: 48px 0 150px;
   background: #f7f7fb;
   font-family: Pretendard, sans-serif;
+`;
+
+export const ChapterReadyWrap = styled(ChapterWrap)`
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 24px 0;
+  box-sizing: border-box;
 `;
 
 export const ChapterHero = styled.header`
@@ -387,7 +395,7 @@ export const ChapterResultWrap = styled.section`
   width: 100%;
   min-height: calc(100vh - 80px);
   position: relative;
-  padding: 210px 0 620px;
+  padding: 128px 0 520px;
   background: ${({ theme }) => theme.PALETTE.white};
 `;
 
@@ -534,18 +542,17 @@ export const WrongAnswerReview = styled.div`
 export const BadgeModalOverlay = styled.div`
   position: fixed;
   inset: 0;
-  z-index: 900;
+  /* z-index: 900; */
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 260px;
+  padding-top: 150px;
   background: rgba(26, 26, 46, 0.34);
 `;
 
 export const FireworkCanvas = styled.canvas`
   position: fixed;
   inset: 0;
-  z-index: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;

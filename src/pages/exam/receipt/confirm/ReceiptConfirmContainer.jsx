@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import * as S from "./style";
+import useLoginCheck from "../../../../hooks/useLoginCheck";
+import LoginGuard from "../../../../components/common/LoginGuard";
 
 const ReceiptConfirmContainer = () => {
+  const { isLoggedIn } = useLoginCheck();
   const [applies, setApplies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -11,7 +14,7 @@ const ReceiptConfirmContainer = () => {
     if (!window.confirm("접수를 취소하시겠습니까?")) return;
     setCancelingId(id);
     try {
-      const res = await fetch(`http://localhost:10000/api/test-apply/${id}`, {
+      const res = await fetch(`http://localhost:10000/api/test-applications/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -29,7 +32,7 @@ const ReceiptConfirmContainer = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:10000/api/test-apply/my", { credentials: "include" })
+    fetch("http://localhost:10000/api/test-applications/my", { credentials: "include" })
       .then(res => {
         if (res.status === 401) throw new Error("login");
         return res.json();
@@ -43,6 +46,14 @@ const ReceiptConfirmContainer = () => {
       })
       .finally(() => setLoading(false));
   }, []);
+
+  if (isLoggedIn === null) return null;
+  if (!isLoggedIn) return (
+    <S.Wrapper>
+      <S.SectionTitle style={{ marginBottom: 16 }}>접수 내역 조회</S.SectionTitle>
+      <LoginGuard message="접수 내역 조회는 로그인 후 이용 가능합니다." />
+    </S.Wrapper>
+  );
 
   return (
     <S.Wrapper>
