@@ -62,7 +62,13 @@ const CommentSection = ({ postId }) => {
           />
         ) : (
           comments.map(({ id, ...comment }) => (
-            <CommentItem key={id} id={id} {...comment} />
+            <CommentItem
+              key={id}
+              id={id}
+              postId={postId}
+              {...comment}
+              onReplySubmit={() => setRefreshKey((prev) => prev + 1)}
+            />
           ))
         )}
       </S.CommentList>

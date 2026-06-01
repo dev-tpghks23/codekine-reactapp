@@ -48,3 +48,17 @@ export const cancelCommentLike = async (commentId) => {
   });
   if (!res.ok) throw new Error("댓글 좋아요 취소 실패");
 };
+
+// 대댓글 작성
+export const postReply = async (postId, commentId, commentContent) => {
+  const response = await fetch(
+    `${ROOT_URL}/comments/${postId}/replies/${commentId}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ commentContent }),
+    }
+  );
+  if (!response.ok) throw new Error("대댓글 등록에 실패했습니다.");
+  return response.json();
+};

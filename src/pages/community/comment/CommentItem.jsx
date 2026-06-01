@@ -5,6 +5,7 @@ import { DEFAULT_IMAGES } from "../constants";
 import {
   requestCommentLike,
   cancelCommentLike,
+  postReply,
 } from "../communityApi/commentApi";
 import {
   CommentItemWrapper,
@@ -20,6 +21,11 @@ import {
   RightArea,
   TimeText,
   ReportButton,
+  ReplyInputWrapper,
+  ReplyTextArea,
+  ReplySubmitRow,
+  ReplyCancelButton,
+  ReplySubmitButton,
 } from "./commentStyle";
 
 import { AuthorAvatar } from "../post/detail/postDetailStyle";
@@ -40,10 +46,16 @@ const S = {
   RightArea,
   TimeText,
   ReportButton,
+  ReplyInputWrapper,
+  ReplyTextArea,
+  ReplySubmitRow,
+  ReplyCancelButton,
+  ReplySubmitButton,
 };
 
 const CommentItem = ({
   id,
+  postId,
   userProfile = "default.jpg",
   userNickname = "사용자",
   commentId = null,
@@ -53,9 +65,12 @@ const CommentItem = ({
   commentReplyCount = 0,
   commentCreateAt = "방금 전",
   showAccessibility = true,
+  onReplySubmit,
 }) => {
   const [liked, setLiked] = useState(commentIsLiked);
   const [likeCount, setLikeCount] = useState(commentLikeCount);
+  const [replyOpen, setReplyOpen] = useState(false);
+  const [replyText, setReplyText] = useState("");
 
   const isReply = commentId !== null;
   const displayLines = commentContent ? commentContent.split("\n") : [];
@@ -75,62 +90,110 @@ const CommentItem = ({
     }
   };
 
+  const handleReplySubmit = async () => {
+    if (!replyText.trim()) return;
+    try {
+      await postReply(postId, id, replyText.trim());
+      setReplyText("");
+      setReplyOpen(false);
+      onReplySubmit?.();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
-    <S.CommentItemWrapper isReply={isReply}>
-      <S.LeftArea>
-        <S.AuthorAvatar
-          size="40px"
-          border-radius="8px"
-          src={userProfile}
-          alt={userNickname}
-          onError={(e) => {
-            e.currentTarget.src = DEFAULT_IMAGES.authorProfile;
-          }}
-        />
-        <S.Body>
-          <S.AuthorName isAuthor={false}>{userNickname}</S.AuthorName>
-          <S.CommentText>
-            {displayLines.map((line, i) => (
-              <p key={i}>{line}</p>
-            ))}
-          </S.CommentText>
-          <S.ReactionsRow>
-            <S.ReactionItem
-              onClick={clickCommentLike}
-              style={{ cursor: "pointer" }}
-            >
-              <FontAwesomeIcon
-                icon={faHeart}
-                style={{ color: liked ? "red" : "inherit" }}
-              />
-              <span>{likeCount}</span>
-            </S.ReactionItem>
-            <S.ReactionItem>
-              <FontAwesomeIcon icon={faCommentDots} />
-              <span>{commentReplyCount}</span>
-            </S.ReactionItem>
-          </S.ReactionsRow>
-          {showAccessibility && (
-            <S.AccessibilityRow>
-              <S.AccessBtn variant="blue">수어로 보기</S.AccessBtn>
-              <S.AccessBtn variant="green">글 읽어주기</S.AccessBtn>
-            </S.AccessibilityRow>
-          )}
-        </S.Body>
-      </S.LeftArea>
-      <S.RightArea>
-        <S.TimeText>{formatRelativeTime(commentCreateAt)}</S.TimeText>
-        <S.ReportButton aria-label="댓글 신고">
-          <img
-            src={DEFAULT_IMAGES.reportIcon}
-            alt="신고"
+    <>
+      <S.CommentItemWrapper isReply={isReply}>
+        <S.LeftArea>
+          <S.AuthorAvatar
+            size="40px"
+            border-radius="8px"
+            src={userProfile}
+            alt={userNickname}
             onError={(e) => {
-              e.currentTarget.src = DEFAULT_IMAGES.reportIcon;
+              e.currentTarget.src = DEFAULT_IMAGES.authorProfile;
             }}
           />
-        </S.ReportButton>
-      </S.RightArea>
-    </S.CommentItemWrapper>
+          <S.Body>
+            <S.AuthorName isAuthor={false}>{userNickname}</S.AuthorName>
+            <S.CommentText>
+              {displayLines.map((line, i) => (
+                <p key={i}>{line}</p>
+              ))}
+            </S.CommentText>
+            <S.ReactionsRow>
+              <S.ReactionItem
+                onClick={clickCommentLike}
+                style={{ cursor: "pointer" }}
+              >
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  style={{ color: liked ? "red" : "inherit" }}
+                />
+                <span>{likeCount}</span>
+              </S.ReactionItem>
+              {!isReply && (
+                <S.ReactionItem
+                  onClick={() => setReplyOpen((prev) => !prev)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <FontAwesomeIcon icon={faCommentDots} />
+                  <span>{commentReplyCount}</span>
+                </S.ReactionItem>
+              )}
+              {isReply && (
+                <S.ReactionItem>
+                  <FontAwesomeIcon icon={faCommentDots} />
+                  <span>{commentReplyCount}</span>
+                </S.ReactionItem>
+              )}
+            </S.ReactionsRow>
+            {showAccessibility && (
+              <S.AccessibilityRow>
+                <S.AccessBtn variant="blue">수어로 보기</S.AccessBtn>
+                <S.AccessBtn variant="green">글 읽어주기</S.AccessBtn>
+              </S.AccessibilityRow>
+            )}
+          </S.Body>
+        </S.LeftArea>
+        <S.RightArea>
+          <S.TimeText>{formatRelativeTime(commentCreateAt)}</S.TimeText>
+          <S.ReportButton aria-label="댓글 신고">
+            <img
+              src={DEFAULT_IMAGES.reportIcon}
+              alt="신고"
+              onError={(e) => {
+                e.currentTarget.src = DEFAULT_IMAGES.reportIcon;
+              }}
+            />
+          </S.ReportButton>
+        </S.RightArea>
+      </S.CommentItemWrapper>
+
+      {replyOpen && (
+        <S.ReplyInputWrapper>
+          <S.ReplyTextArea
+            value={replyText}
+            onChange={(e) => setReplyText(e.target.value)}
+            placeholder="대댓글을 입력하세요"
+          />
+          <S.ReplySubmitRow>
+            <S.ReplyCancelButton
+              onClick={() => {
+                setReplyOpen(false);
+                setReplyText("");
+              }}
+            >
+              취소
+            </S.ReplyCancelButton>
+            <S.ReplySubmitButton onClick={handleReplySubmit}>
+              등록
+            </S.ReplySubmitButton>
+          </S.ReplySubmitRow>
+        </S.ReplyInputWrapper>
+      )}
+    </>
   );
 };
 
