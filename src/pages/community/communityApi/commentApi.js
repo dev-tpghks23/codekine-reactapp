@@ -72,8 +72,8 @@ export const deleteComment = async (commentId) => {
 };
 
 // 댓글 수정
-export const updateComment = async (commentId, commentContent) => {
-  const res = await fetch(`${ROOT_URL}/comments/${commentId}`, {
+export const updateComment = async ({ id, commentContent }) => {
+  const res = await fetch(`${ROOT_URL}/comments/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ commentContent }),

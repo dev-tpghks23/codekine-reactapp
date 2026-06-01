@@ -134,8 +134,9 @@ const CommentItem = ({
 
   const handleEditSubmit = async () => {
     if (!editText.trim()) return;
+    const commentContent = editText.trim();
     try {
-      await updateComment(id, editText.trim());
+      await updateComment({ id, commentContent });
       setEditOpen(false);
       onEditSubmit?.();
     } catch (e) {
