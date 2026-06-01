@@ -11,43 +11,7 @@ import Underline from "@tiptap/extension-underline";
 import ToolBar from "./postWriteComponent/ToolBar";
 import CommunityRule from "./postWriteComponent/CommunityRule";
 import PostingGuide from "./postWriteComponent/PostingGuide";
-import {
-  ActionBtn,
-  ActionButtons,
-  BodyCol,
-  CardBody,
-  CardHeader,
-  CategoryCol,
-  CategoryHint,
-  CategoryPill,
-  CategoryPills,
-  ContentArea,
-  FieldLabel,
-  FieldRow,
-  FileBtn,
-  FileButtons,
-  FileDropSub,
-  FileDropTitle,
-  FileDropZone,
-  InputField,
-  LabelText,
-  LeftBlock,
-  PostWritePage,
-  RequiredMark,
-  RightBlock,
-  SaveIcon,
-  SaveNotice,
-  SaveText,
-  TagCol,
-  TagHint,
-  TagInputField,
-  TextArea,
-  TiptapWrapper,
-  UploadIcon,
-  WriteCard,
-} from "./postWriteStyle";
-
-import { Page } from "../../communityStyle";
+import * as S from "./postWriteStyle";
 
 // 파일 업로드 내 파일
 import postFileUpload from "../../assets/postWrite/post-file-upload.svg";
@@ -71,43 +35,6 @@ const PostWrite = () => {
     extensions: [StarterKit, Underline],
     content: "",
   });
-
-  const S = {
-    ActionBtn,
-    ActionButtons,
-    BodyCol,
-    CardBody,
-    CardHeader,
-    CategoryCol,
-    CategoryHint,
-    CategoryPill,
-    CategoryPills,
-    ContentArea,
-    FieldLabel,
-    FieldRow,
-    FileBtn,
-    FileButtons,
-    FileDropSub,
-    FileDropTitle,
-    FileDropZone,
-    InputField,
-    LabelText,
-    LeftBlock,
-    Page,
-    PostWritePage,
-    RequiredMark,
-    RightBlock,
-    SaveIcon,
-    SaveNotice,
-    SaveText,
-    TagCol,
-    TagHint,
-    TagInputField,
-    TextArea,
-    TiptapWrapper,
-    UploadIcon,
-    WriteCard,
-  };
 
   return (
     <S.PostWritePage>
