@@ -57,7 +57,7 @@ export const getJoinedChatRooms = async (page = 1) => {
 };
 
 export const deleteChatRoom = async (chatRoomId) => {
-  const response = await fetch(`${ROOT_URL}/chat-room/${chatRoomId}`, {
+  const response = await fetch(`${ROOT_URL}/chat-rooms/${chatRoomId}`, {
     method: "DELETE",
   });
   if (!response.ok) throw new Error("채팅방 삭제에 실패했습니다");
