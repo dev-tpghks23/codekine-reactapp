@@ -1,15 +1,15 @@
 import styled from "styled-components";
-import theme from "../../../../styles/theme";
+import theme from "../../../../../styles/theme";
 import {
   communityBorderRadius,
   communitySideWidth,
   flexStartColumn,
   hoverStyle,
   Divider,
-} from "../../communityStyle";
-import { flexBetweenRow, flexCenterColumn } from "../../../../styles/common";
-import T from "../../communityTextStyle";
-import { BORDER_STYLE } from "../../constants";
+} from "../../../communityStyle";
+import { flexBetweenRow, flexCenterColumn } from "../../../../../styles/common";
+import T from "../../../communityTextStyle";
+import { BORDER_STYLE } from "../../../constants";
 
 const Card = styled.div`
   ${flexCenterColumn}

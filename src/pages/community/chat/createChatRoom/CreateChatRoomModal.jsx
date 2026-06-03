@@ -268,10 +268,7 @@ const CreateChatRoomModal = ({ mode = "create" }) => {
           </S.FormBottomArea>
 
           <S.SubmitArea>
-            <S.SubmitBtn
-              type="button"
-              onClick={handleSubmit(handleFormSubmit)}
-            >
+            <S.SubmitBtn type="button" onClick={handleSubmit(handleFormSubmit)}>
               <S.SubmitBtnIcon>
                 <FontAwesomeIcon icon={faComments} />
               </S.SubmitBtnIcon>
