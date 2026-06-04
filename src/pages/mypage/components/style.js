@@ -467,13 +467,8 @@ S.LevelButton = styled.button`
   cursor: pointer;
 `;
 
-<<<<<<< HEAD
-/* 레벨 뱃지 */
-export const LevelBadge = styled.span`
-=======
 /* 레벨 배지 */
 S.LevelBadge = styled.span`
->>>>>>> b12cf5640e09fff6a3d154647aad43e787950d1a
   min-width: 34px;
   height: 19px;
   padding: 0 8px;
@@ -517,22 +512,14 @@ S.ExpBar = styled.div`
 `;
 
 /* 경험치 채움 */
-<<<<<<< HEAD
-export const ExpFill = styled.div`
-=======
 S.ExpFill = styled.div`
->>>>>>> b12cf5640e09fff6a3d154647aad43e787950d1a
   width: ${({ $percent }) => `${Math.min(Math.max($percent || 0, 0), 100)}%`};
   height: 100%;
   background: ${PALETTE.primary.main};
 `;
 
 /* 경험치 텍스트 */
-<<<<<<< HEAD
-export const ExpText = styled.span`
-=======
 S.ExpText = styled.span`
->>>>>>> b12cf5640e09fff6a3d154647aad43e787950d1a
   width: 92px;
 
   font-size: 8px;
@@ -882,8 +869,5 @@ S.LevelNoticeBox = styled.div`
   font-weight: ${FONT_WEIGHT.regular};
   color: #92400e;
 `;
-<<<<<<< HEAD
-=======
 
 export default S;
->>>>>>> b12cf5640e09fff6a3d154647aad43e787950d1a
