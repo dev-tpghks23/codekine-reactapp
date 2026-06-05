@@ -362,9 +362,9 @@ const StudyComponent = () => {
 
       <S.VideoArea id="video-section">
         <h2>
-          바로 배우는 <span>오늘의 단어</span> 영상
+          바로 배우는 <span>추천 학습</span> 영상
         </h2>
-        <p className="desc">매일 업데이트되는 짧은 학습 영상을 만나보세요.</p>
+        <p className="desc">수어, 수신호, 모스부호 영상을 골라 짧게 학습해보세요.</p>
 
         <S.VideoTabs>
           {videoTabs.map((tab) => (
@@ -403,9 +403,9 @@ const StudyComponent = () => {
           </S.VideoEmpty>
         )}
 
-        <S.ActionLink to="/study/learn" onClick={(event) => handleProtectedLink(event, "/study/learn")}>
+        {/* <S.ActionLink to="/study/learn" onClick={(event) => handleProtectedLink(event, "/study/learn")}>
           더 많은 영상 보기 →
-        </S.ActionLink>
+        </S.ActionLink> */}
       </S.VideoArea>
 
       {isAttendanceOpen && (
