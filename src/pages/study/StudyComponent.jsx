@@ -331,8 +331,12 @@ const StudyComponent = () => {
       </S.CategoryBand>
 
       <S.SearchArea>
-        <h2>찾고 싶은 단어를 검색하세요</h2>
+        <h2>배우고 싶은 단어를 찾아보세요</h2>
         <S.SearchForm onSubmit={handleSearch}>
+          <S.SearchIcon aria-hidden="true" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M16.5 16.5L21 21" />
+          </S.SearchIcon>
           <input
             type="text"
             value={keyword}

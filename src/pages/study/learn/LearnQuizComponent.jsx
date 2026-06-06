@@ -251,8 +251,9 @@ const LearnQuizComponent = () => {
       .filter((answer) => answer.correct === false)
       .map((answer) => String(answer.questionId));
     const wrongQuestions = quiz.questions.filter((item) => wrongQuestionIds.includes(String(item.id)));
+    const randomWrongQuestion = wrongQuestions[Math.floor(Math.random() * wrongQuestions.length)];
 
-    return wrongQuestions.length > 0 ? wrongQuestions : [question];
+    return randomWrongQuestion ? [randomWrongQuestion] : [question];
   }, [question, quiz.questions, state.answers]);
   const reviewQuestion = reviewQuestions[reviewIndex] || reviewQuestions[0];
 
