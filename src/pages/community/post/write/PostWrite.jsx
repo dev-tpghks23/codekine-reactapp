@@ -17,7 +17,6 @@ import { createPost, updatePost } from "../../communityApi/postApi";
 // 파일 업로드 내 파일
 import postFileUpload from "../../assets/postWrite/post-file-upload.svg";
 import postTempSaveInfo from "../../assets/postWrite/post-temp-save-info.svg";
-import useAuthCheck from "../../../customservice/useAuthCheck";
 
 const CATEGORIES = [
   "전체",
@@ -56,7 +55,7 @@ const PostWrite = () => {
     }
   }, [editor, editState?.postContent]);
 
-  useAuthCheck();
+  // useAuthCheck();
 
   const validate = () => {
     const errs = {};
