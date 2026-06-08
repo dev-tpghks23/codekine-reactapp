@@ -104,16 +104,19 @@ const SideChatComponent = ({ chatRoomId, onViewAll }) => {
   return (
     <>
       <MessageList ref={messageListRef}>
-        {messages.map((msg) => (
-          <ChatMessage
-            key={msg.id}
-            isMine={msg.isMine}
-            message={msg.content}
-            time={msg.time}
-            username={msg.username}
-            profileImage={msg.profileImage}
-          />
-        ))}
+        {messages.map(
+          ({ id, isMine, content, chatType, time, username, profileImage }) => (
+            <ChatMessage
+              key={id}
+              isMine={isMine}
+              message={content}
+              chatType={chatType}
+              time={time}
+              username={username}
+              profileImage={profileImage}
+            />
+          ),
+        )}
       </MessageList>
 
       <InputArea>
