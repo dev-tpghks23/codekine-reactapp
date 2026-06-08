@@ -36,6 +36,9 @@ import {
 
 import { AuthorAvatar } from "../post/detail/postDetailStyle";
 import formatRelativeTime from "../functions/formatRelativeTime";
+import useAuthStore from "../../../store/authStore";
+import CommentReportPopup from "../report/CommentReportPopup";
+import LoginRequiredPopup from "../common/LoginRequiredPopup";
 
 const S = {
   CommentItemWrapper,
@@ -80,12 +83,23 @@ const CommentItem = ({
   onDelete,
   onEditSubmit,
 }) => {
+  const { isAuthenticated } = useAuthStore();
   const [liked, setLiked] = useState(commentIsLiked);
   const [likeCount, setLikeCount] = useState(commentLikeCount);
   const [replyOpen, setReplyOpen] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [editOpen, setEditOpen] = useState(false);
   const [editText, setEditText] = useState("");
+  const [reportPopupOpen, setReportPopupOpen] = useState(false);
+  const [loginPopupOpen, setLoginPopupOpen] = useState(false);
+
+  const handleReportClick = () => {
+    if (!isAuthenticated) {
+      setLoginPopupOpen(true);
+    } else {
+      setReportPopupOpen(true);
+    }
+  };
 
   const isReply = commentId !== null;
   const displayLines = commentContent ? commentContent.split("\n") : [];
@@ -146,6 +160,7 @@ const CommentItem = ({
 
   return (
     <>
+      {/* 댓글 영역 */}
       <S.CommentItemWrapper isReply={isReply}>
         <S.LeftArea>
           <S.AuthorAvatar
@@ -207,7 +222,7 @@ const CommentItem = ({
               <S.DeleteButton onClick={handleDelete}>삭제</S.DeleteButton>
             </S.ActionRow>
           ) : (
-            <S.ReportButton aria-label="댓글 신고">
+            <S.ReportButton aria-label="댓글 신고" onClick={handleReportClick}>
               <img
                 src={DEFAULT_IMAGES.reportIcon}
                 alt="신고"
@@ -243,6 +258,18 @@ const CommentItem = ({
         </S.EditInputWrapper>
       )}
 
+      {/* 팝업창 */}
+      <CommentReportPopup
+        isOpen={reportPopupOpen}
+        onClose={() => setReportPopupOpen(false)}
+        commentId={id}
+      />
+      <LoginRequiredPopup
+        isOpen={loginPopupOpen}
+        onClose={() => setLoginPopupOpen(false)}
+      />
+
+      {/* 대댓글 컴포넌트 */}
       {replyOpen && (
         <S.ReplyInputWrapper>
           <S.ReplyTextArea

@@ -1,6 +1,6 @@
 import React from "react";
 import ReportPopup from "./ReportPopup";
-import { postUserReport } from "../communityApi/userReportApi";
+import { postUserReport } from "../communityApi/reportApi";
 
 const UserReportPopup = ({ isOpen, onClose, reportingUserId }) => (
   <ReportPopup
@@ -8,7 +8,11 @@ const UserReportPopup = ({ isOpen, onClose, reportingUserId }) => (
     onClose={onClose}
     title="유저 신고"
     onSubmit={({ title, detail }) =>
-      postUserReport({ userReportTitle: title, userReportDetail: detail, reportingUserId })
+      postUserReport({
+        userReportTitle: title,
+        userReportDetail: detail,
+        reportingUserId,
+      })
     }
   />
 );
