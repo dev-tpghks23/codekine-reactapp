@@ -28,15 +28,9 @@ const fallbackStatusList = [
     progress: 90,
     recentStudyAt: "2026-06-04T10:00:00",
   },
-  {
-    eduId: "dummy-life-sign",
-    eduTitle: "실생활 수어",
-    progress: 100,
-    recentStudyAt: "2026-05-31T10:00:00",
-  },
 ];
 
-// 백엔드 학습결과가 비어 있을 때만 보여줄 React 더미데이터입니다.
+// 백엔드 학습결과 데이터와 함께 보여줄 React 더미데이터입니다.
 const fallbackResultList = [
   {
     quizAttemptId: "dummy-braille-read",
@@ -55,6 +49,15 @@ const fallbackResultList = [
     spentTime: 300,
     accuracy: 10,
     completedAt: "2026-06-04T11:00:00",
+  },
+  {
+    quizAttemptId: "dummy-life-sign",
+    quizTitle: "실생활 수어",
+    correctCount: 10,
+    totalCount: 10,
+    spentTime: 260,
+    accuracy: 100,
+    completedAt: "2026-05-31T10:00:00",
   },
 ];
 
@@ -198,13 +201,17 @@ const MyPageLearningComponent = () => {
   const originStatusList = learningData.statusList || [];
   const originResultList = learningData.resultList || [];
 
-  const statusList = sortStatusListByRecent(
-    originStatusList.length > 0 ? originStatusList : fallbackStatusList
-  );
+  // 백엔드 학습 데이터가 있어도 리액트 더미데이터는 아래에 계속 보여준다.
+  const statusList = [
+    ...sortStatusListByRecent(originStatusList),
+    ...sortStatusListByRecent(fallbackStatusList),
+  ];
 
-  const resultList = sortResultListByRecent(
-    originResultList.length > 0 ? originResultList : fallbackResultList
-  );
+  // 백엔드 학습결과 데이터가 있어도 리액트 더미데이터는 아래에 계속 보여준다.
+  const resultList = [
+    ...sortResultListByRecent(originResultList),
+    ...sortResultListByRecent(fallbackResultList),
+  ];
 
   const needStatusToggleButton = statusList.length > COLLAPSED_COUNT;
   const needResultToggleButton = resultList.length > COLLAPSED_COUNT;
