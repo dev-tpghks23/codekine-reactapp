@@ -254,6 +254,13 @@ export const TiptapWrapper = styled.div`
       text-decoration: line-through;
     }
 
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+
     &.ProseMirror-focused {
       border-color: ${theme.PALETTE.primary.main};
     }
@@ -264,7 +271,7 @@ export const TiptapWrapper = styled.div`
 export const FileDropZone = styled.div`
   ${leftAreaWidth}
   min-width: 0;
-  height: 180px;
+  min-height: 180px;
   background: ${theme.GRAYSCALE[10]};
   border: 2px dashed ${theme.GRAYSCALE[8]};
   border-radius: ${RADIUS.input};
@@ -275,11 +282,56 @@ export const FileDropZone = styled.div`
   gap: 6px;
   padding: 20px;
   box-sizing: border-box;
-  cursor: pointer;
   transition: border-color 0.2s;
 
   &:hover {
     border-color: ${theme.PALETTE.primary.main};
+  }
+`;
+
+export const AttachedImageGrid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+`;
+
+export const ThumbItem = styled.div`
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+`;
+
+export const ThumbImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  opacity: ${({ $loading }) => ($loading ? 0.5 : 1)};
+  transition: opacity 0.2s;
+`;
+
+export const ThumbRemove = styled.button`
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: ${theme.PALETTE.white};
+  font-size: 13px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
   }
 `;
 

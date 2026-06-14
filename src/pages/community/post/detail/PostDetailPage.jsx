@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { TAG_ON_PRIMARY } from "../../constants";
 import PostContent from "./detailComponent/PostContent";
-import PostSidebar from "../sidebar/component/PostSidebar";
+import PostSidebar from "../sidebar/PostSidebar";
 import { Page, ContentArea, ColumnBlock } from "../../communityStyle";
 import {
   BreadcrumbBar,

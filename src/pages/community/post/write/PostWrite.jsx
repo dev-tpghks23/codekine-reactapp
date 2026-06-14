@@ -4,15 +4,20 @@
 // import theme from "../styles/theme";
 
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
+import Image from "@tiptap/extension-image";
 import ToolBar from "./postWriteComponent/ToolBar";
 import CommunityRule from "./postWriteComponent/CommunityRule";
 import PostingGuide from "./postWriteComponent/PostingGuide";
 import * as S from "./postWriteStyle";
-import { createPost, updatePost } from "../../communityApi/postApi";
+import {
+  createPost,
+  updatePost,
+  uploadPostImage,
+} from "../../communityApi/postApi";
 
 // 파일 업로드 내 파일
 import postFileUpload from "../../assets/postWrite/post-file-upload.svg";
@@ -42,10 +47,29 @@ const PostWrite = () => {
   );
   const [title, setTitle] = useState(editState?.postTitle ?? "");
   const [errors, setErrors] = useState({});
+  const [attachedImages, setAttachedImages] = useState([]);
+  const attachInputRef = useRef(null);
+  const uploadAndAttachRef = useRef(null);
 
   const editor = useEditor({
-    extensions: [StarterKit, Underline],
+    extensions: [
+      StarterKit,
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+      Image,
+    ],
     content: "",
+    editorProps: {
+      handleDrop(view, event, _slice, moved) {
+        if (moved) return false;
+        const files = event.dataTransfer?.files;
+        if (!files || files.length === 0) return false;
+        const imageFile = [...files].find((f) => f.type.startsWith("image/"));
+        if (!imageFile) return false;
+        event.preventDefault();
+        uploadAndAttachRef.current?.(imageFile);
+        return true;
+      },
+    },
   });
 
   useEffect(() => {
@@ -53,6 +77,62 @@ const PostWrite = () => {
       editor.commands.setContent(editState.postContent);
     }
   }, [editor, editState?.postContent]);
+
+  const uploadAndAttach = async (file) => {
+    const localUrl = URL.createObjectURL(file);
+    setAttachedImages((prev) => [...prev, { localUrl, bucketUrl: null }]);
+    try {
+      const bucketUrl = await uploadPostImage(file);
+      let wasCancelled = false;
+      setAttachedImages((prev) => {
+        if (!prev.some((img) => img.localUrl === localUrl)) {
+          wasCancelled = true;
+          return prev;
+        }
+        return prev.map((img) =>
+          img.localUrl === localUrl ? { ...img, bucketUrl } : img,
+        );
+      });
+      if (!wasCancelled) {
+        editor?.chain().focus().setImage({ src: bucketUrl }).run();
+      }
+    } catch {
+      setAttachedImages((prev) =>
+        prev.filter((img) => img.localUrl !== localUrl),
+      );
+    }
+  };
+  uploadAndAttachRef.current = uploadAndAttach;
+
+  const handleAttachImageChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    e.target.value = "";
+    await uploadAndAttach(file);
+  };
+
+  const handleRemoveAttached = (localUrl, bucketUrl) => {
+    setAttachedImages((prev) =>
+      prev.filter((img) => img.localUrl !== localUrl),
+    );
+
+    if (!bucketUrl || !editor) return;
+
+    const { state } = editor;
+    const positions = [];
+    state.doc.descendants((node, pos) => {
+      if (node.type.name === "image" && node.attrs.src === bucketUrl) {
+        positions.push({ pos, size: node.nodeSize });
+      }
+    });
+    if (positions.length === 0) return;
+
+    let tr = state.tr;
+    [...positions].reverse().forEach(({ pos, size }) => {
+      tr = tr.delete(pos, pos + size);
+    });
+    editor.view.dispatch(tr);
+  };
 
   // useAuthCheck();
 
@@ -68,6 +148,11 @@ const PostWrite = () => {
     return errs;
   };
 
+  const extractFirstImage = (html) => {
+    const match = html.match(/<img[^>]+src="([^"]+)"/);
+    return match ? match[1] : null;
+  };
+
   const handleSubmit = async () => {
     const errs = validate();
     if (Object.keys(errs).length > 0) {
@@ -75,19 +160,23 @@ const PostWrite = () => {
       return;
     }
     setErrors({});
+    const html = editor.getHTML();
+    const postProfile = extractFirstImage(html);
     try {
       if (editState) {
         await updatePost(editState.postId, {
           postTitle: title,
-          postContent: editor.getHTML(),
+          postContent: html,
           postTag: activeCategory,
+          postProfile,
         });
         navigate(`/community/post/${editState.postId}`, { replace: true });
       } else {
         const { data } = await createPost({
           postTitle: title,
-          postContent: editor.getHTML(),
+          postContent: html,
           postTag: activeCategory,
+          postProfile,
         });
         navigate(`/community/post/${data}`, { replace: true });
       }
@@ -195,16 +284,52 @@ const PostWrite = () => {
                   <S.LabelText>첨부파일</S.LabelText>
                 </S.FieldLabel>
                 <S.FileDropZone>
-                  <S.UploadIcon src={postFileUpload} alt="파일 업로드" />
-                  <S.FileDropTitle>
-                    파일을 드래그하거나 클릭해서 첨부하세요
-                  </S.FileDropTitle>
-                  <S.FileDropSub>
-                    JPG, PNG, GIF, MP4 지원 · 파일당 최대 10MB
-                  </S.FileDropSub>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={attachInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleAttachImageChange}
+                  />
+                  {attachedImages.length === 0 ? (
+                    <>
+                      <S.UploadIcon src={postFileUpload} alt="파일 업로드" />
+                      <S.FileDropTitle>
+                        파일을 드래그하거나 클릭해서 첨부하세요
+                      </S.FileDropTitle>
+                      <S.FileDropSub>
+                        JPG, PNG, GIF, MP4 지원 · 파일당 최대 10MB
+                      </S.FileDropSub>
+                    </>
+                  ) : (
+                    <S.AttachedImageGrid>
+                      {attachedImages.map(({ localUrl, bucketUrl }) => (
+                        <S.ThumbItem key={localUrl}>
+                          <S.ThumbImg
+                            src={localUrl}
+                            alt="첨부 이미지"
+                            $loading={!bucketUrl}
+                          />
+                          <S.ThumbRemove
+                            type="button"
+                            onClick={() =>
+                              handleRemoveAttached(localUrl, bucketUrl)
+                            }
+                          >
+                            ×
+                          </S.ThumbRemove>
+                        </S.ThumbItem>
+                      ))}
+                    </S.AttachedImageGrid>
+                  )}
                   <S.FileButtons>
-                    <S.FileBtn>이미지 첨부</S.FileBtn>
-                    <S.FileBtn>영상 첨부</S.FileBtn>
+                    <S.FileBtn
+                      type="button"
+                      onClick={() => attachInputRef.current?.click()}
+                    >
+                      이미지 첨부
+                    </S.FileBtn>
+                    <S.FileBtn type="button">영상 첨부</S.FileBtn>
                   </S.FileButtons>
                 </S.FileDropZone>
               </S.FieldRow>
