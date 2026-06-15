@@ -8,7 +8,7 @@ import useJoinedChatRoomList from "../../hooks/useJoinedChatRoomList";
 import { useChatContext } from "../../../context/ChatContext";
 import { SIDE_TABS } from "../../chatComponents/sideChatTabs";
 
-// ─── Styles───────────────────────────────────────────────────────────────────
+// ─── Styles ──────────────────────────────────────────────────────────────────
 
 const ListBody = styled.div`
   background: ${colors.bgCard};
@@ -118,22 +118,22 @@ const TabBtn = styled.button`
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-const SideChatOngoingComponent = () => {
+const SideChatDirectComponent = () => {
   const { listFilter, changeListFilter, selectRoom } = useChatContext();
   const { rooms, isLoading, hasMore, loaderRef } = useJoinedChatRoomList();
 
-  const groupRooms = rooms.filter((r) => r.chatRoomType === "그룹");
+  const directRooms = rooms.filter((r) => r.chatRoomType === "개인");
 
   return (
     <ListBody>
       <RoomList>
-        {isLoading && groupRooms.length === 0 ? (
+        {isLoading && directRooms.length === 0 ? (
           <LoaderRow>불러오는 중...</LoaderRow>
-        ) : !isLoading && groupRooms.length === 0 ? (
-          <LoaderRow>진행중인 채팅방이 없습니다.</LoaderRow>
+        ) : !isLoading && directRooms.length === 0 ? (
+          <LoaderRow>진행중인 1:1 채팅이 없습니다.</LoaderRow>
         ) : (
           <>
-            {groupRooms.map((room) => (
+            {directRooms.map((room) => (
               <RoomItem key={room.id} onClick={() => selectRoom(room)}>
                 <ThumbnailBox
                   src={room.chatRoomProfile || chatDefaultProfile}
@@ -147,9 +147,7 @@ const SideChatOngoingComponent = () => {
                     <RoomName>{room.chatRoomName}</RoomName>
                     <RoomTime>{room.time}</RoomTime>
                   </RoomTopRow>
-                  <RoomLastMsg>
-                    {room.chatRoomDetail || `${room.chatRoomUsers}명`}
-                  </RoomLastMsg>
+                  <RoomLastMsg>{room.chatRoomDetail || "1:1 채팅"}</RoomLastMsg>
                 </RoomInfo>
               </RoomItem>
             ))}
@@ -177,4 +175,4 @@ const SideChatOngoingComponent = () => {
   );
 };
 
-export default SideChatOngoingComponent;
+export default SideChatDirectComponent;

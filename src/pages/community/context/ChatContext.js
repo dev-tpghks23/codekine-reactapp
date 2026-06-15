@@ -5,6 +5,8 @@ import {
   useEffect,
   useState,
 } from "react";
+import { createDirectChatRoom } from "../communityApi/directChatApi";
+import { getChatRoomInfo } from "../communityApi/chatApi";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 채팅 상태 enum
@@ -29,11 +31,13 @@ export const SCREEN = {
 
 // LIST 화면 안에서 어떤 필터(목록 종류)가 활성인지
 //   - LIVE/REQUEST 는 사이드/팝업 공통
-//   - ONGOING 은 사이드의 "채팅중인 방" / 팝업 우측 패널
+//   - ONGOING 은 사이드의 "그룹 채팅중인 방" / 팝업 우측 패널
+//   - DIRECT 는 사이드의 "1:1 채팅방 목록"
 //   - FOLLOW 는 팝업 전용 (사이드에서는 ONGOING 으로 폴백)
 export const LIST_FILTER = {
   LIVE: "live",
   ONGOING: "ongoing",
+  DIRECT: "direct",
   REQUEST: "request",
   FOLLOW: "follow",
 };
@@ -94,7 +98,29 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   // ── 창 형태 토글 ───────────────────────────────────────────────────────
-  // 팝업 → 사이드: FOLLOW 는 사이드에 미존재 → ONGOING 으로 폴백
+  // 1:1 채팅방 열기: API 호출 → 방 ID 획득 → 사이드로 진입
+  const openDirectRoom = useCallback(async (targetUserId) => {
+    try {
+      const { data: chatRoomId } = await createDirectChatRoom(targetUserId);
+      if (!chatRoomId) throw new Error("채팅방 ID를 받지 못했습니다.");
+
+      let roomInfo;
+      try {
+        roomInfo = await getChatRoomInfo(chatRoomId);
+      } catch {
+        roomInfo = { id: chatRoomId, chatRoomName: "1:1 채팅", chatRoomType: "개인" };
+      }
+
+      setChatRoomDTO(roomInfo);
+      setScreen(SCREEN.ROOM);
+      setView(VIEW.SIDE);
+    } catch (err) {
+      console.error("1:1 채팅방 열기 실패:", err);
+      alert("1:1 채팅방을 여는 데 실패했습니다. 다시 시도해 주세요.");
+    }
+  }, []);
+
+  // 팝업 → 사이드: FOLLOW/DIRECT 는 사이드에 미존재 → ONGOING 으로 폴백
   const minimizeView = useCallback(() => {
     setListFilter((prev) =>
       prev === LIST_FILTER.FOLLOW ? LIST_FILTER.ONGOING : prev,
@@ -167,6 +193,7 @@ export const ChatProvider = ({ children }) => {
         createChatRoom,
         openCreateChatRoom,
         openChatRoom,
+        openDirectRoom,
         selectRoom,
         leaveRoom,
         changeListFilter,

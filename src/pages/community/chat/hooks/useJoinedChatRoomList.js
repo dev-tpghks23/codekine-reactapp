@@ -23,6 +23,7 @@ const toDisplayRoom = (room) => ({
   time: formatLastTime(room.chatLastReadAt),
   chatRoomDetail: room.chatRoomDetail ?? "",
   chatRoomProfile: room.chatRoomProfile ?? null,
+  chatRoomType: room.chatRoomType ?? "그룹",
 });
 
 const useJoinedChatRoomList = () => {
