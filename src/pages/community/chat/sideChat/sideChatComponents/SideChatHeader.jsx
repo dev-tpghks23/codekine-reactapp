@@ -72,6 +72,7 @@ const LIST_TITLES = {
   [LIST_FILTER.LIVE]: "전체 채팅 리스트",
   [LIST_FILTER.REQUEST]: "채팅 요청 리스트",
   [LIST_FILTER.ONGOING]: "진행중인 채팅",
+  [LIST_FILTER.DIRECT]: "1:1 채팅",
 };
 
 const SideChatHeader = ({

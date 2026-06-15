@@ -7,6 +7,7 @@ import UserChatRequest from "./UserProfile/UserChatRequest";
 import UserReportBlock from "./UserProfile/UserReportBlock";
 import PostFilterBar from "./UserProfile/PostFilterBar";
 import { getCommunityUserInfo } from "../communityApi/communityProfileApi";
+import { useChatContext } from "../context/ChatContext";
 
 const S = {
   Page,
@@ -20,6 +21,7 @@ const CommunityUserProfileComponent = () => {
   const location = useLocation();
   const [userResponseDTO, setUserResponseDTO] = useState();
   const [refresh, setRefresh] = useState(0);
+  const { openDirectRoom } = useChatContext();
 
   useEffect(() => {
     const isRootProfile =
@@ -70,7 +72,7 @@ const CommunityUserProfileComponent = () => {
             <UserActivity {...userResponseDTO} />
 
             {/* 유저한테 1:1 채팅 신청 */}
-            <UserChatRequest />
+            <UserChatRequest onChatStart={() => openDirectRoom(Number(userId))} />
 
             {/* 유저 신고 */}
             <UserReportBlock userId={userId} />

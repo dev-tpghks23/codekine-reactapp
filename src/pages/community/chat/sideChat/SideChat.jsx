@@ -7,6 +7,7 @@ import SideChatListComponent from "./sideChatComponents/SideChatListComponent";
 import SideChatRequestComponent from "./sideChatComponents/SideChatRequestComponent";
 import SideChatComponent from "./sideChatComponents/SideChatComponent";
 import SideChatOngoingComponent from "./sideChatComponents/SideChatOngoingComponent";
+import SideChatDirectComponent from "./sideChatComponents/SideChatDirectComponent";
 
 // ─── Panel ───────────────────────────────────────────────────────────────────
 
@@ -48,6 +49,9 @@ const SideChat = ({ onDragMouseDown }) => {
       )}
       {screen === SCREEN.LIST && listFilter === LIST_FILTER.ONGOING && (
         <SideChatOngoingComponent />
+      )}
+      {screen === SCREEN.LIST && listFilter === LIST_FILTER.DIRECT && (
+        <SideChatDirectComponent />
       )}
       {screen === SCREEN.ROOM && (
         <SideChatComponent chatRoomId={chatRoomDTO?.id} onViewAll={leaveRoom} />
